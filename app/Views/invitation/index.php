@@ -3,14 +3,28 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <style>
+    html {
+        scroll-behavior: smooth;
+    }
+
     * {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
         font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+        background-image: url('/img/bg/pattern.png');
+        background-size: 7%;
     }
 
     .navbar {
@@ -25,6 +39,7 @@
         margin-bottom: 10px;
         border-radius: 10px;
         box-shadow: 1px 1px 10px 0px lightblue;
+        transition: width 0.2s;
     }
 
     .navbar>ul>li>a {
@@ -33,6 +48,7 @@
         padding: 5px 20px;
         font-size: 14px;
         line-height: 2;
+        transition: font-size 0.2s;
     }
 
     .navbar>ul>li>a:hover {
@@ -48,6 +64,7 @@
 
     svg {
         width: 40px;
+        transition: width 0.2s;
     }
 
     svg>path,
@@ -55,20 +72,115 @@
         fill: #06526a;
     }
 
+    .jumbotron {
+        min-height: 600px;
+        width: 100%;
+        background-image: url("/img/bg/prewedding.jpg");
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        color: #f7f2ed;
+        transition: 0.2s;
+        border-radius: 0;
+        margin: 0;
+        padding: 0;
+    }
+
+
+    .hero {
+        margin: 0;
+        padding: 0;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+    }
+
+    .nickname {
+        font-size: 72px;
+        font-family: 'Dancing Script', cursive;
+        text-shadow: 1px 1px lightblue;
+    }
+
+    .the-wedding-of {
+        font-size: 20px;
+        text-transform: uppercase;
+        letter-spacing: 5px;
+        text-shadow: 1px 1px lightblue;
+    }
+
+    .untuk {
+        font-size: 20px;
+        line-height: 5;
+    }
+
+    a.buka-undangan {
+        text-transform: uppercase;
+        text-decoration: none;
+        color: #06526a;
+        background-color: #FFFFFF;
+        border-radius: 30px 30px 30px 30px;
+        padding: 20px 50px 20px 50px;
+        transition: 0.5s;
+    }
+
+    a.buka-undangan:hover {
+        color: #FFFFFF;
+        background-color: #06526a;
+    }
+
     @media screen and (max-width: 600px) {
+        .navbar {
+            width: 95%;
+            transition: width 0.2s;
+        }
+
+        .navbar>ul>li>a {
+            font-size: 11px;
+            transition: font-size 0.2s;
+        }
+
         svg {
-            width: 20px;
+            width: 30px;
+            transition: width 0.2s;
         }
     }
     </style>
 </head>
 
 <body>
+    <div id="home" class="jumbotron text-center">
+        <div class="hero">
+            <h3 class="the-wedding-of">The Wedding of</h3>
+            <h1 class="nickname">Arrum & Neng</h1>
+            <h3 class="the-wedding-of">12.12.2021</h3>
+            <p class="untuk the-wedding-of">Dear : Anonim</p>
+            <a href="#couple" class="buka-undangan">Buka Undangan</a>
+        </div>
+    </div>
+    <div id="couple" class="jumbotron text-center">
+        <div class="hero">
+            <h3 class="the-wedding-of">The Wedding of</h3>
+            <h1 class="nickname">Arrum & Neng</h1>
+            <h3 class="the-wedding-of">12.12.2021</h3>
+            <p class="untuk the-wedding-of">Dear : Anonim</p>
+            <a href="#couple" class="buka-undangan">Buka Undangan</a>
+        </div>
+    </div>
+    <!-- <div class="card text-center">
+            <div class="card-body">
+                <h5 class="card-title">Special title treatment</h5>
+                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div> -->
     <nav class="navbar navbar-dark bg-info navbar-expand" id="myNavbar">
         <ul class="navbar-nav nav-justified w-100">
             <li class="nav-item">
                 <a href="#home" class="nav-link">
-                    <svg id="home" xmlns="http://www.w3.org/2000/svg" height="100%" viewBox="0 0 512 512" width="100%">
+                    <svg class="home" xmlns="http://www.w3.org/2000/svg" height="100%" viewBox="0 0 512 512"
+                        width="100%">
                         <path
                             d="m266 492c0 11.046875-8.953125 20-20 20h-226c-11.046875 0-20-8.953125-20-20v-275.332031c0-5.9375 2.636719-11.566407 7.195312-15.363281l236-196.667969c7.417969-6.183594 18.191407-6.183594 25.609376 0l236 196.667969c8.484374 7.070312 9.628906 19.679687 2.558593 28.167968-7.070312 8.484375-19.683593 9.628906-28.167969 2.558594l-223.195312-185.996094-216 180v245.964844h206c11.046875 0 20 8.953125 20 20zm214.339844-54.105469c-21.945313 26.457031-54.714844 50.679688-97.402344 72-5.628906 2.808594-12.246094 2.808594-17.875 0-42.6875-21.320312-75.457031-45.542969-97.398438-72-65.140624-78.527343-19.78125-165.195312 47.335938-165.195312 26.746094 0 46.421875 10.949219 59 21.226562 12.578125-10.277343 32.253906-21.226562 59-21.226562 67.246094 0 112.316406 86.859375 47.339844 165.195312zm-47.339844-125.195312c-27.667969 0-42.191406 20.742187-42.332031 20.949219-8.304688 12.527343-25.816407 11.761718-33.285157.082031-1.226562-1.722657-15.585937-21.03125-42.382812-21.03125-43.109375 0-80.136719 83.078125 59 156.8125 139.136719-73.734375 102.117188-156.8125 59-156.8125zm0 0"
                             fill="url(#a)" id="path7" />
@@ -78,7 +190,7 @@
             </li>
             <li class="nav-item">
                 <a href="#couple" class="nav-link">
-                    <svg id="couple" xmlns="http://www.w3.org/2000/svg" height="100%" viewBox="0 0 512 512"
+                    <svg class="couple" xmlns="http://www.w3.org/2000/svg" height="100%" viewBox="0 0 512 512"
                         width="100%">
                         <path
                             d="m164.166 440.414c11.213 0 21.274-6.679 25.632-17.016 1.395-3.308-.156-7.12-3.464-8.514-3.309-1.395-7.12.156-8.515 3.464-2.321 5.507-7.681 9.065-13.653 9.065-5.973 0-11.332-3.559-13.654-9.065-1.394-3.309-5.206-4.859-8.514-3.464s-4.859 5.207-3.465 8.514c4.358 10.337 14.419 17.016 25.633 17.016z" />
@@ -118,7 +230,8 @@
             </li>
             <li class="nav-item">
                 <a href="#event" class="nav-link">
-                    <svg id="event" xmlns="http://www.w3.org/2000/svg" height="100%" viewBox="0 0 512 512" width="100%">
+                    <svg class="event" xmlns="http://www.w3.org/2000/svg" height="100%" viewBox="0 0 512 512"
+                        width="100%">
                         <path
                             d="m473.271 28.859h-67.713c-.659-15.035-13.093-27.065-28.288-27.065s-27.628 12.03-28.287 27.065h-185.966c-.659-15.035-13.093-27.065-28.288-27.065s-27.628 12.03-28.287 27.065h-67.713c-21.355 0-38.729 17.374-38.729 38.729v328.428c0 4.143 3.358 7.5 7.5 7.5s7.5-3.357 7.5-7.5v-328.428c0-13.084 10.645-23.729 23.729-23.729h67.682v25.076h-48.825c-10.334 0-18.742 8.407-18.742 18.742v363.709c0 10.335 8.408 18.742 18.742 18.742h315.508c7.952 0 15.72-3.241 21.312-8.893l70.079-70.808c5.592-5.651 8.672-13.142 8.672-21.092 0-24.858 0-193.009 0-212.837 0-4.143-3.357-7.5-7.5-7.5s-7.5 3.357-7.5 7.5v26.837h-404.313v-95.657c0-2.063 1.679-3.742 3.742-3.742h48.843c.391 15.277 12.931 27.585 28.3 27.585s27.909-12.308 28.301-27.585h185.941c.391 15.277 12.931 27.585 28.3 27.585s27.909-12.308 28.301-27.585h48.843c2.063 0 3.742 1.679 3.742 3.742v31.643c0 4.143 3.357 7.5 7.5 7.5s7.5-3.357 7.5-7.5v-31.643c0-10.335-8.407-18.742-18.742-18.742h-48.825v-25.077h67.682c13.084 0 23.729 10.645 23.729 23.729v403.89c0 13.084-10.645 23.729-23.729 23.729h-434.543c-13.084-.001-23.729-10.645-23.729-23.729v-40.462c0-4.143-3.358-7.5-7.5-7.5s-7.5 3.357-7.5 7.5v40.462c0 21.355 17.374 38.729 38.729 38.729h434.543c21.355 0 38.729-17.373 38.729-38.729v-403.89c-.001-21.355-17.374-38.729-38.73-38.729zm-83.611 415.848v-53.74c0-2.383 1.939-4.322 4.322-4.322h53.143zm68.496-246.37v173.308h-64.174c-10.654 0-19.322 8.668-19.322 19.322v64.162h-317.074c-2.063 0-3.742-1.679-3.742-3.742v-253.05zm-295.108-154.478h185.904v25.076h-185.904zm-15 39.343c0 7.344-5.975 13.318-13.319 13.318s-13.319-5.975-13.319-13.318v-53.089c0-7.345 5.975-13.319 13.319-13.319s13.319 5.975 13.319 13.319zm242.542 0c0 7.344-5.975 13.318-13.319 13.318s-13.318-5.975-13.318-13.318v-53.089c0-7.345 5.975-13.319 13.318-13.319 7.345 0 13.319 5.975 13.319 13.319z" />
                         <path
@@ -135,7 +248,7 @@
             </li>
             <li class="nav-item">
                 <a href="#galerry" class="nav-link">
-                    <svg id="galerry" xmlns="http://www.w3.org/2000/svg" height="100%" viewBox="0 0 512 512"
+                    <svg class="galerry" xmlns="http://www.w3.org/2000/svg" height="100%" viewBox="0 0 512 512"
                         width="100%">
                         <path
                             d="m 310.19189,92.853609 h -21.59902 a 7.2723976,7.4025305 0 0 1 0,-14.805061 h 21.59902 a 7.2723976,7.4025305 0 0 1 0,14.805061 z"
@@ -175,7 +288,7 @@
             </li>
             <li class="nav-item">
                 <a href="#guest" class="nav-link">
-                    <svg id="guest" xmlns="http://www.w3.org/2000/svg" height="100%" viewBox="0 -94 512 512"
+                    <svg class="guest" xmlns="http://www.w3.org/2000/svg" height="100%" viewBox="0 -94 512 512"
                         width="100%">
                         <path
                             d="m501.96875 0h-364.453125c-5.539063 0-10.03125 4.492188-10.03125 10.03125v80.484375c-13.191406-8.441406-28.53125-12.972656-44.574219-12.972656-22.15625 0-42.984375 8.628906-58.652344 24.296875-32.34375 32.34375-32.34375 84.96875 0 117.308594l99.917969 99.917968c3.484375 3.484375 8.054688 5.222656 12.632813 5.222656 4.574218 0 9.148437-1.738281 12.632812-5.222656l67.464844-67.464844h108.808594l127.96875 71.09375c1.527344.851563 3.203125 1.265626 4.871094 1.265626 2.386718 0 4.753906-.851563 6.628906-2.503907 3.1875-2.804687 4.261718-7.3125 2.683594-11.253906l-23.441407-58.601563h57.542969c5.539062 0 10.03125-4.492187 10.03125-10.03125v-231.539062c0-5.539062-4.488281-10.03125-10.03125-10.03125zm-365.160156 303.332031-98.363282-98.367187c-24.523437-24.519532-24.523437-64.417969 0-88.9375 11.875-11.878906 27.667969-18.421875 44.46875-18.421875 16.796876 0 32.589844 6.542969 44.46875 18.421875l2.332032 2.332031c2.050781 2.050781 4.765625 3.015625 7.453125 2.917969.117187.003906.230469.019531.347656.019531 3.894531 0 7.265625-2.226563 8.925781-5.46875 11.855469-11.75 27.558594-18.222656 44.261719-18.222656 16.796875 0 32.59375 6.542969 44.46875 18.421875 11.878906 11.875 18.421875 27.667968 18.421875 44.46875 0 16.796875-6.542969 32.589844-18.421875 44.46875zm355.132812-71.789062h-62.332031c-3.328125 0-6.441406 1.648437-8.308594 4.40625-1.863281 2.757812-2.242187 6.257812-1.003906 9.347656l18.464844 46.164063-105.578125-58.65625c-1.488282-.828126-3.167969-1.261719-4.871094-1.261719h-91.34375l12.390625-12.394531c15.667969-15.664063 24.296875-36.496094 24.296875-58.652344s-8.628906-42.988282-24.296875-58.65625c-15.667969-15.667969-36.5-24.296875-58.65625-24.296875-15.46875 0-30.285156 4.222656-43.15625 12.09375v-69.574219h344.394531zm0 0" />
@@ -197,13 +310,6 @@
             </li>
         </ul>
     </nav>
-
-    <div style="padding-left:16px">
-        <h2>Responsive Bottom Navbar Example</h2>
-        <p>Resize the browser window to see how it works.
-        </p>
-    </div>
-
     <script>
     </script>
 

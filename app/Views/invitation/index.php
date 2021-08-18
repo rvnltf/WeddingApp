@@ -6,6 +6,7 @@
     <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Questrial&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -19,12 +20,14 @@
         margin: 0;
         padding: 0;
         box-sizing: border-box;
-        font-family: Arial, Helvetica, sans-serif;
+        font-family: "Questrial", Sans-serif;
     }
 
     body {
         background-image: url('/img/bg/pattern.png');
         background-size: 7%;
+        line-height: 2;
+        color: #06526a;
     }
 
     .navbar {
@@ -77,7 +80,7 @@
     }
 
     .jumbotron {
-        min-height: 659px;
+        min-height: 658px;
         background-image: url("/img/bg/prewedding.jpg");
         background-repeat: no-repeat;
         background-position: center;
@@ -101,12 +104,18 @@
         bottom: 0px;
         left: 0px;
         background-color: rgba(5, 5, 5, 0.25);
+        overflow: hidden;
     }
 
     .nickname {
         font-size: 72px;
         font-family: 'Dancing Script', cursive;
         text-shadow: 1px 1px lightblue;
+    }
+
+    .fullname {
+        font-size: 28xp;
+        font-weight: bold;
     }
 
     .the-wedding-of {
@@ -136,6 +145,22 @@
         background-color: #06526a;
     }
 
+    .couple-page {
+        padding: 50px 0;
+    }
+
+    .card {
+        border-radius: 25px;
+        overflow: hidden;
+        align-items: center;
+        justify-content: center;
+        display: inline-block;
+    }
+
+    p {
+        white-space: pre-line;
+    }
+
     @media screen and (max-width: 600px) {
         .navbar {
             width: 95%;
@@ -151,6 +176,14 @@
             width: 30px;
             transition: width 0.2s;
         }
+
+        .the-wedding-of {
+            font-size: 16px;
+        }
+
+        .nickname {
+            word-spacing: 100vw;
+        }
     }
     </style>
 </head>
@@ -165,7 +198,53 @@
             <a href="#couple" class="item buka-undangan">Buka Undangan</a>
         </div>
     </div>
-    <div id="couple" class="jumbotron text-center">
+    <div id="couple" class="couple-page text-center">
+        <div class="container">
+            <div class="row">
+                <div class="col"></div>
+                <div class="col-10">
+                    <img src="/img/icon/en.png" alt="E & N" width="200">
+                    <p>Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan pasangan-pasangan untukmu
+                        dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya, dan Dia menjadikan di
+                        antaramu rasa kasih dan sayang. Sungguh, pada yang demikian itu benar-benar terdapat tanda-tanda
+                        (kebesaran Allah) bagi kaum yang berpikir.
+                        (Ar-Rum: 21)</p>
+                </div>
+                <div class="col"></div>
+            </div>
+            <div class="row">
+                <div class="col"></div>
+                <div class="col-10">
+                    <div class="row">
+                        <div class="col pas-foto">
+                            <div class="card" style="width: 200px;">
+                                <img src="/img/foto/cewe.jpg" class="card-img-top" alt="">
+                            </div>
+                            <h4 class="nickname">Neng</h4>
+                            <h5 class="fullname">Nengsri</h5>
+                            <p>Putri dari:
+                                Bapak
+                                &
+                                Ibu
+                            </p>
+                        </div>
+                        <div class="col pas-foto">
+                            <div class="card" style="width: 200px;">
+                                <img src="/img/foto/cowo.jpg" class="card-img-top" alt="">
+                            </div>
+                            <h4 class="nickname">Arrum</h4>
+                            <h5 class="fullname">Emas Arrum Nurdin</h5>
+                            <p>Putra pertama dari:
+                                Bapak Asep Saefudin
+                                &
+                                Ibu Lilis
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col"></div>
+            </div>
+        </div>
     </div>
     <!-- <div class="card text-center">
             <div class="card-body">

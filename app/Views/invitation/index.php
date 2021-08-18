@@ -35,11 +35,15 @@
         position: fixed;
         left: 50%;
         transform: translateX(-50%);
-        bottom: 0;
+        bottom: -100px;
         margin-bottom: 10px;
         border-radius: 10px;
         box-shadow: 1px 1px 10px 0px lightblue;
-        transition: width 0.2s;
+        transition: 0.2s;
+    }
+
+    .navbar.sticky {
+        bottom: 0;
     }
 
     .navbar>ul>li>a {
@@ -73,8 +77,7 @@
     }
 
     .jumbotron {
-        min-height: 600px;
-        width: 100%;
+        min-height: 659px;
         background-image: url("/img/bg/prewedding.jpg");
         background-repeat: no-repeat;
         background-position: center;
@@ -86,15 +89,18 @@
         padding: 0;
     }
 
-
-    .hero {
-        margin: 0;
-        padding: 0;
+    .box {
         position: absolute;
-        top: 50%;
-        left: 50%;
-        -ms-transform: translate(-50%, -50%);
-        transform: translate(-50%, -50%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        content: '';
+        top: 0px;
+        right: 0px;
+        bottom: 0px;
+        left: 0px;
+        background-color: rgba(5, 5, 5, 0.25);
     }
 
     .nickname {
@@ -151,22 +157,15 @@
 
 <body>
     <div id="home" class="jumbotron text-center">
-        <div class="hero">
-            <h3 class="the-wedding-of">The Wedding of</h3>
-            <h1 class="nickname">Arrum & Neng</h1>
-            <h3 class="the-wedding-of">12.12.2021</h3>
-            <p class="untuk the-wedding-of">Dear : Anonim</p>
-            <a href="#couple" class="buka-undangan">Buka Undangan</a>
+        <div class="box">
+            <h3 class="item the-wedding-of">The Wedding of</h3>
+            <h1 class="item nickname">Arrum & Neng</h1>
+            <h3 class="item the-wedding-of">12.12.2021</h3>
+            <p class="item untuk the-wedding-of">Dear : Anonim</p>
+            <a href="#couple" class="item buka-undangan">Buka Undangan</a>
         </div>
     </div>
     <div id="couple" class="jumbotron text-center">
-        <div class="hero">
-            <h3 class="the-wedding-of">The Wedding of</h3>
-            <h1 class="nickname">Arrum & Neng</h1>
-            <h3 class="the-wedding-of">12.12.2021</h3>
-            <p class="untuk the-wedding-of">Dear : Anonim</p>
-            <a href="#couple" class="buka-undangan">Buka Undangan</a>
-        </div>
     </div>
     <!-- <div class="card text-center">
             <div class="card-body">
@@ -311,6 +310,10 @@
         </ul>
     </nav>
     <script>
+    const nav = document.querySelector('nav')
+    window.addEventListener('scroll', () => {
+        nav.classList.toggle('sticky', window.scrollY > 500);
+    });
     </script>
 
 </body>

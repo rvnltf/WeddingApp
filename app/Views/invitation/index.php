@@ -2,6 +2,8 @@
 <html>
 
 <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
@@ -11,6 +13,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.8.1/baguetteBox.min.css">
+    <link rel="stylesheet" href="/css/fluid-gallery.css">
+    <link rel="icon" type="image/png" href="/img/icon/favicon.png" />
+    <title>Nengsri & Emas Arrum Nurdin</title>
     <style>
     html {
         scroll-behavior: smooth;
@@ -28,6 +34,11 @@
         background-size: 7%;
         line-height: 2;
         color: #06526a;
+        overflow: hidden;
+    }
+
+    body.scroll {
+        overflow: visible;
     }
 
     .navbar {
@@ -80,8 +91,9 @@
     }
 
     .jumbotron {
-        min-height: 658px;
+        min-height: 616px;
         background-image: url("/img/bg/prewedding.jpg");
+        background-attachment: fixed;
         background-repeat: no-repeat;
         background-position: center;
         background-size: cover;
@@ -135,12 +147,13 @@
         text-decoration: none;
         color: #06526a;
         background-color: #FFFFFF;
-        border-radius: 30px 30px 30px 30px;
+        border-radius: 35px;
         padding: 20px 50px 20px 50px;
         transition: 0.5s;
     }
 
-    a.buka-undangan:hover {
+    a.buka-undangan:hover,
+    a.lokasi:hover {
         color: #FFFFFF;
         background-color: #06526a;
     }
@@ -159,6 +172,50 @@
 
     p {
         white-space: pre-line;
+    }
+
+
+    .event-page {
+        min-height: 616px;
+        background-image: url("/img/bg/prewedding2.jpg");
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        color: #f7f2ed;
+        transition: 0.2s;
+        border-radius: 0;
+        margin: 0;
+        padding: 50px 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    .event-page .card {
+        background-color: rgba(5, 5, 5, 0.5);
+        overflow: hidden;
+    }
+
+    .title {
+        font-size: 36px;
+        font-family: 'Dancing Script', cursive;
+        text-shadow: 1px 1px lightblue;
+    }
+
+    .subtitle {
+        font-size: 24px;
+        text-shadow: 1px 1px lightblue;
+    }
+
+    a.lokasi {
+        text-decoration: none;
+        color: #06526a;
+        background-color: #FFFFFF;
+        border-radius: 24px;
+        padding: 12px 20px;
+        transition: 0.5s;
     }
 
     @media screen and (max-width: 600px) {
@@ -193,7 +250,7 @@
         <div class="box">
             <h3 class="item the-wedding-of">The Wedding of</h3>
             <h1 class="item nickname">Arrum & Neng</h1>
-            <h3 class="item the-wedding-of">12.12.2021</h3>
+            <h3 class="item the-wedding-of">21.12.2021</h3>
             <p class="item untuk the-wedding-of">Dear : Anonim</p>
             <a href="#couple" class="item buka-undangan">Buka Undangan</a>
         </div>
@@ -244,6 +301,86 @@
                 </div>
                 <div class="col"></div>
             </div>
+        </div>
+    </div>
+    <div id="event" class="event-page text-center">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="card" style="width:100%;">
+                        <div class="card-body">
+                            <h5 class="card-title title">Detail Acara</h5>
+                            <hr style="background-color: grey;">
+                            <h6 class="card-subtitle subtitle">Akad Nikah</h6>
+                            <p class="card-text tanggal">
+                                Ahad 17 Jumadil Awal 1443
+                                21 Desember 2021
+                                08.00 – 11.00 WIB
+                            </p>
+                            <p class="card-text alamat">
+                                Rumah Mempelai Wanita
+                                Jl. Raya Sliyeg
+                            </p>
+                            <a href="#lokasi" class="item lokasi">Petunjuk Lokasi</a>
+                            <hr style="background-color: grey;">
+                            <h6 class="card-subtitle subtitle">Resepsi</h6>
+                            <p class="card-text tanggal">
+                                Ahad 17 Jumadil Awal 1443
+                                21 Desember 2021
+                                11.00 – 18.00 WIB
+                            </p>
+                            <p class="card-text alamat">
+                                Rumah Mempelai Wanita
+                                Jl. Raya Sliyeg
+                            </p>
+                            <a href="#lokasi" class="item lokasi">Petunjuk Lokasi</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="gallery" class="gallery-page text-center">
+        <div class="container gallery-container">
+            <h5 class="title">Gallery</h5>
+            <div class="tz-gallery">
+                <div class="row">
+
+                    <div class="col-sm-12 col-md-4">
+                        <a class="lightbox" href="/img/bg/bridge.jpg">
+                            <img src="/img/bg/bridge.jpg" alt="Bridge">
+                        </a>
+                    </div>
+                    <div class="col-sm-6 col-md-4">
+                        <a class="lightbox" href="/img/bg/park.jpg">
+                            <img src="/img/bg/park.jpg" alt="Park">
+                        </a>
+                    </div>
+                    <div class="col-sm-6 col-md-4">
+                        <a class="lightbox" href="/img/bg/tunnel.jpg">
+                            <img src="/img/bg/tunnel.jpg" alt="Tunnel">
+                        </a>
+                    </div>
+                    <div class="col-sm-12 col-md-8">
+                        <a class="lightbox" href="/img/bg/traffic.jpg">
+                            <img src="/img/bg/traffic.jpg" alt="Traffic">
+                        </a>
+                    </div>
+                    <div class="col-sm-6 col-md-4">
+                        <a class="lightbox" href="/img/bg/coast.jpg">
+                            <img src="/img/bg/coast.jpg" alt="Coast">
+                        </a>
+                    </div>
+                    <div class="col-sm-6 col-md-4">
+                        <a class="lightbox" href="/img/bg/rails.jpg">
+                            <img src="/img/bg/rails.jpg" alt="Rails">
+                        </a>
+                    </div>
+
+                </div>
+
+            </div>
+
         </div>
     </div>
     <!-- <div class="card text-center">
@@ -325,8 +462,8 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="#galerry" class="nav-link">
-                    <svg class="galerry" xmlns="http://www.w3.org/2000/svg" height="100%" viewBox="0 0 512 512"
+                <a href="#gallery" class="nav-link">
+                    <svg class="gallery" xmlns="http://www.w3.org/2000/svg" height="100%" viewBox="0 0 512 512"
                         width="100%">
                         <path
                             d="m 310.19189,92.853609 h -21.59902 a 7.2723976,7.4025305 0 0 1 0,-14.805061 h 21.59902 a 7.2723976,7.4025305 0 0 1 0,14.805061 z"
@@ -388,10 +525,17 @@
             </li>
         </ul>
     </nav>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.8.1/baguetteBox.min.js"></script>
     <script>
-    const nav = document.querySelector('nav')
+    baguetteBox.run('.tz-gallery');
+
+    const nav = document.querySelector('nav');
+    const body = document.querySelector('body');
     window.addEventListener('scroll', () => {
-        nav.classList.toggle('sticky', window.scrollY > 500);
+        nav.classList.toggle('sticky', window.scrollY > 300);
+    });
+    window.addEventListener('scroll', () => {
+        body.classList.toggle('scroll', window.scrollY > 0);
     });
     </script>
 

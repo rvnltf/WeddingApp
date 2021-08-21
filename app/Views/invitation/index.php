@@ -14,7 +14,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.8.1/baguetteBox.min.css">
-    <link rel="stylesheet" href="/css/fluid-gallery.css">
+    <link rel="stylesheet" href="/css/gallery-grid.css">
+    <link rel="stylesheet" href="/css/form-comment.css">
     <link rel="icon" type="image/png" href="/img/icon/favicon.png" />
     <title>Nengsri & Emas Arrum Nurdin</title>
     <style>
@@ -35,6 +36,7 @@
         line-height: 2;
         color: #06526a;
         overflow: hidden;
+        margin-bottom: 120px;
     }
 
     body.scroll {
@@ -153,7 +155,9 @@
     }
 
     a.buka-undangan:hover,
-    a.lokasi:hover {
+    a.lokasi:hover,
+    #post:hover,
+    button.btn-gift:hover {
         color: #FFFFFF;
         background-color: #06526a;
     }
@@ -209,7 +213,9 @@
         text-shadow: 1px 1px lightblue;
     }
 
-    a.lokasi {
+    a.lokasi,
+    #post,
+    button.btn-gift {
         text-decoration: none;
         color: #06526a;
         background-color: #FFFFFF;
@@ -344,26 +350,21 @@
         <div class="container gallery-container">
             <h5 class="title">Gallery</h5>
             <div class="tz-gallery">
-                <div class="row">
 
-                    <div class="col-sm-12 col-md-4">
-                        <a class="lightbox" href="/img/bg/bridge.jpg">
-                            <img src="/img/bg/bridge.jpg" alt="Bridge">
-                        </a>
-                    </div>
+                <div class="row">
                     <div class="col-sm-6 col-md-4">
                         <a class="lightbox" href="/img/bg/park.jpg">
                             <img src="/img/bg/park.jpg" alt="Park">
                         </a>
                     </div>
                     <div class="col-sm-6 col-md-4">
-                        <a class="lightbox" href="/img/bg/tunnel.jpg">
-                            <img src="/img/bg/tunnel.jpg" alt="Tunnel">
+                        <a class="lightbox" href="/img/bg/bridge.jpg">
+                            <img src="/img/bg/bridge.jpg" alt="Bridge">
                         </a>
                     </div>
-                    <div class="col-sm-12 col-md-8">
-                        <a class="lightbox" href="/img/bg/traffic.jpg">
-                            <img src="/img/bg/traffic.jpg" alt="Traffic">
+                    <div class="col-sm-12 col-md-4">
+                        <a class="lightbox" href="/img/bg/tunnel.jpg">
+                            <img src="/img/bg/tunnel.jpg" alt="Tunnel">
                         </a>
                     </div>
                     <div class="col-sm-6 col-md-4">
@@ -376,20 +377,87 @@
                             <img src="/img/bg/rails.jpg" alt="Rails">
                         </a>
                     </div>
-
+                    <div class="col-sm-6 col-md-4">
+                        <a class="lightbox" href="/img/bg/traffic.jpg">
+                            <img src="/img/bg/traffic.jpg" alt="Traffic">
+                        </a>
+                    </div>
+                    <div class="col-sm-6 col-md-4">
+                        <a class="lightbox" href="/img/bg/rocks.jpg">
+                            <img src="/img/bg/rocks.jpg" alt="Rocks">
+                        </a>
+                    </div>
+                    <div class="col-sm-6 col-md-4">
+                        <a class="lightbox" href="/img/bg/benches.jpg">
+                            <img src="/img/bg/benches.jpg" alt="Benches">
+                        </a>
+                    </div>
+                    <div class="col-sm-6 col-md-4">
+                        <a class="lightbox" href="/img/bg/sky.jpg">
+                            <img src="/img/bg/sky.jpg" alt="Sky">
+                        </a>
+                    </div>
                 </div>
 
             </div>
 
         </div>
     </div>
-    <!-- <div class="card text-center">
-            <div class="card-body">
-                <h5 class="card-title">Special title treatment</h5>
-                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
+    <hr style="background-color:lightblue;">
+    <div id="guest" class="guest-page text-center">
+        <div class="container">
+            <h5 class="title">Ucapan dan Do'a</h5>
+            <div class="row">
+                <div class="col-lg-4 col-md-5 col-sm-4 offset-md-1 offset-sm-1 col-12 mt-4">
+                    <form id="algin-form">
+                        <div class="form-group">
+                            <label for="name">Nama</label>
+                            <input type="text" name="name" id="fullname" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Ucapan dan Do'a</label>
+                            <textarea name="msg" id="" msg cols="30" rows="5" class="form-control"> </textarea>
+                        </div>
+                        <div class="form-group"> <button type="button" id="post" class="btn">Kirim Ucapan</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-sm-5 col-md-6 col-12 pb-4">
+                    <div class="comment mt-4 text-justify float-left">
+                        <h4>Jhon Doe</h4> <span>- 20 October, 2018</span>
+                        <hr style="background-color:lightblue;margin:0;">
+                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusamus numquam assumenda hic
+                            aliquam vero sequi velit molestias doloremque molestiae dicta?</p>
+                    </div>
+                    <div class="text-justify darker mt-4 float-right">
+                        <h4>Rob Simpson</h4> <span>- 20 October, 2018</span>
+                        <hr style="background-color:lightblue;margin:0;">
+                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusamus numquam assumenda hic
+                            aliquam vero sequi velit molestias doloremque molestiae dicta?</p>
+                    </div>
+                    <div class="comment mt-4 text-justify">
+                        <h4>Jhon Doe</h4> <span>- 20 October, 2018</span>
+                        <hr style="background-color:lightblue;margin:0;">
+                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusamus numquam assumenda hic
+                            aliquam vero sequi velit molestias doloremque molestiae dicta?</p>
+                    </div>
+                    <div class="darker mt-4 text-justify">
+                        <h4>Rob Simpson</h4> <span>- 20 October, 2018</span>
+                        <hr style="background-color:lightblue;margin:0;">
+                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusamus numquam assumenda hic
+                            aliquam vero sequi velit molestias doloremque molestiae dicta?</p>
+                    </div>
+                </div>
             </div>
-        </div> -->
+            <div class="row">
+                <div class="col">
+                    <button type="button" class="btn btn-gift" data-toggle="modal" data-target="#giftModal">
+                        Wedding Gift
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
     <nav class="navbar navbar-dark bg-info navbar-expand" id="myNavbar">
         <ul class="navbar-nav nav-justified w-100">
             <li class="nav-item">
@@ -496,8 +564,6 @@
                             d="m 436.69524,421.19284 a 7.2723974,7.4025303 0 0 1 -4.6907,-1.7396 c -5.61429,-4.81904 -33.65666,-29.75077 -33.65666,-47.51684 a 26.72606,27.204299 0 0 1 25.91883,-27.90754 24.47889,24.916917 0 0 1 12.42853,3.47919 24.413438,24.850295 0 0 1 12.42125,-3.47919 26.72606,27.204299 0 0 1 25.91155,27.90754 c 0,17.76607 -28.02781,42.6978 -33.64938,47.51684 a 7.2723974,7.4025303 0 0 1 -4.68342,1.7396 z m -12.42853,-62.35892 a 12.210355,12.428849 0 0 0 -11.37403,13.10248 c 0,6.42539 11.63584,20.66047 23.80256,32.00114 12.18126,-11.34067 23.788,-25.56835 23.788,-32.00114 a 12.203083,12.421446 0 0 0 -11.36675,-13.10248 10.552248,10.741071 0 0 0 -7.35239,3.2349 7.2723974,7.4025303 0 0 1 -10.13046,0 10.603156,10.792889 0 0 0 -7.36693,-3.2349 z"
                             id="path20" style="stroke-width:7.33718" />
                     </svg>
-
-
                     <span class="small d-block">Gallery</span>
                 </a>
             </li>
@@ -525,6 +591,19 @@
             </li>
         </ul>
     </nav>
+    <div class="modal fade" id="giftModal" tabindex="-1" role="dialog" aria-labelledby="giftModalTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h5 class="title text-center">Wedding Gift</h5>
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.8.1/baguetteBox.min.js"></script>
     <script>
     baguetteBox.run('.tz-gallery');

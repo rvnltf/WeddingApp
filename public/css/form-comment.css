@@ -7,35 +7,33 @@
     background-color: black
 }
 
-.comments {
-    margin-top: 5%;
-    margin-left: 20px
-}
 
 .darker {
+    width: 100%;
     background-color: aliceblue;
     float: right;
     border-radius: 20px;
     padding-left: 40px;
     padding-right: 30px;
-    padding-top: 10px
+    padding-top: 10px;
 }
 
 .comment {
+    width: 100%;
     border: 1px solid white;
     background-color: rgba(255, 255, 255, 0.8);
     float: left;
     border-radius: 20px;
     padding-left: 40px;
     padding-right: 30px;
-    padding-top: 10px
+    padding-top: 10px;
 }
 
 .comment h4,
 .comment span,
 .darker h4,
 .darker span {
-    display: inline
+    display: inline;
 }
 
 #checkbx {

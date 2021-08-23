@@ -174,7 +174,10 @@
         display: inline-block;
     }
 
-    p {
+    .kalimat,
+    .orangtua,
+    .alamat,
+    .tanggal {
         white-space: pre-line;
     }
 
@@ -267,7 +270,8 @@
                 <div class="col"></div>
                 <div class="col-10">
                     <img src="/img/icon/en.png" alt="E & N" width="200">
-                    <p>Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan pasangan-pasangan untukmu
+                    <p class="kalimat">Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan pasangan-pasangan
+                        untukmu
                         dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya, dan Dia menjadikan di
                         antaramu rasa kasih dan sayang. Sungguh, pada yang demikian itu benar-benar terdapat tanda-tanda
                         (kebesaran Allah) bagi kaum yang berpikir.
@@ -285,7 +289,7 @@
                             </div>
                             <h4 class="nickname">Neng</h4>
                             <h5 class="fullname">Nengsri</h5>
-                            <p>Putri dari:
+                            <p class="orangtua">Putri dari:
                                 Bapak
                                 &
                                 Ibu
@@ -297,7 +301,7 @@
                             </div>
                             <h4 class="nickname">Arrum</h4>
                             <h5 class="fullname">Emas Arrum Nurdin</h5>
-                            <p>Putra pertama dari:
+                            <p class="">Putra pertama dari:
                                 Bapak Asep Saefudin
                                 &
                                 Ibu Lilis
@@ -409,44 +413,44 @@
             <h5 class="title">Ucapan dan Do'a</h5>
             <div class="row">
                 <div class="col-lg-4 col-md-5 col-sm-4 offset-md-1 offset-sm-1 col-12 mt-4">
-                    <form id="algin-form">
+                    <form id="align-form" action="/home/kirimUcapan" method="POST">
+                        <?=csrf_field();?>
                         <div class="form-group">
-                            <label for="name">Nama</label>
-                            <input type="text" name="name" id="fullname" class="form-control">
+                            <label for="nama">Nama</label>
+                            <input type="text" name="nama" id="nama"
+                                class="form-control <?=$validation->hasError('nama')?'is-invalid':''?>"
+                                value="<?=old('nama')?>">
+                            <div class="invalid-feedback"><?=$validation->getError('nama')?></div>
                         </div>
                         <div class="form-group">
-                            <label for="message">Ucapan dan Do'a</label>
-                            <textarea name="msg" id="" msg cols="30" rows="5" class="form-control"> </textarea>
+                            <label for="ucapan">Ucapan dan Do'a</label>
+                            <textarea name="ucapan" id="ucapan" msg cols="30" rows="5"
+                                class="form-control <?=$validation->hasError('ucapan')?'is-invalid':''?>"
+                                value="<?=old('ucapan')?>"> </textarea>
+                            <div class="invalid-feedback"><?=$validation->getError('ucapan')?></div>
                         </div>
-                        <div class="form-group"> <button type="button" id="post" class="btn">Kirim Ucapan</button>
+                        <div class="form-group"> <button type="submit" id="post" class="btn">Kirim Ucapan</button>
                         </div>
                     </form>
                 </div>
                 <div class="col-sm-5 col-md-6 col-12 pb-4">
-                    <div class="comment mt-4 text-justify float-left">
-                        <h4>Jhon Doe</h4> <span>- 20 October, 2018</span>
-                        <hr style="background-color:lightblue;margin:0;">
-                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusamus numquam assumenda hic
-                            aliquam vero sequi velit molestias doloremque molestiae dicta?</p>
-                    </div>
-                    <div class="text-justify darker mt-4 float-right">
-                        <h4>Rob Simpson</h4> <span>- 20 October, 2018</span>
-                        <hr style="background-color:lightblue;margin:0;">
-                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusamus numquam assumenda hic
-                            aliquam vero sequi velit molestias doloremque molestiae dicta?</p>
-                    </div>
+                    <?php $i = 1;?>
+                    <?php foreach($ucapan as $valueUcapan): ?>
+                    <?php if($i%2==0): ?>
                     <div class="comment mt-4 text-justify">
-                        <h4>Jhon Doe</h4> <span>- 20 October, 2018</span>
+                        <h4><?=$valueUcapan['nama']?></h4> <span>- <?= date('d/m/Y')?></span>
                         <hr style="background-color:lightblue;margin:0;">
-                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusamus numquam assumenda hic
-                            aliquam vero sequi velit molestias doloremque molestiae dicta?</p>
+                        <p><?=$valueUcapan['ucapan']?></p>
                     </div>
-                    <div class="darker mt-4 text-justify">
-                        <h4>Rob Simpson</h4> <span>- 20 October, 2018</span>
+                    <?php else: ?>
+                    <div class="text-justify darker mt-4">
+                        <h4><?=$valueUcapan['nama']?></h4> <span>- <?= date('d/m/Y')?></span>
                         <hr style="background-color:lightblue;margin:0;">
-                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusamus numquam assumenda hic
-                            aliquam vero sequi velit molestias doloremque molestiae dicta?</p>
+                        <p><?=$valueUcapan['ucapan']?></p>
                     </div>
+                    <?php endif; ?>
+                    <?php $i++;?>
+                    <?php endforeach;?>
                 </div>
             </div>
             <div class="row">

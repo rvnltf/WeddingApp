@@ -10,9 +10,12 @@ class Admin extends BaseController
 			'title' => 'Dashboard'
 		];
 		return view('admin/pages/index', $data);
-	}
+	}	
 	public function data_undangan()
 	{
 		return view('admin/pages/data_undangan');
+	}
+	public function simpanDataUndangan(){
+		
 	}
 }

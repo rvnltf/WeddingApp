@@ -9,7 +9,7 @@
 <div class="modal fade bd-example-modal-xl" id="tambahDataModal" tabindex="-1" role="dialog"
     aria-labelledby="tambahDataModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
-        <form action="/admin/simpanDataUndangan" method="POST">
+        <form action="/admin/simpanDataUndangan" method="POST" enctype="multipart/form-data">
             <?=csrf_field();?>
             <div class="modal-content">
                 <div class="modal-header">
@@ -28,6 +28,7 @@
                                     <div class="col-sm-4">
                                         <input type="text" class="form-control" id="nickname_p" name="nickname_p"
                                             placeholder="Pria" aria-label="Pria">
+                                        <div class="invalid-feedback"><?=$validation->getError('nama')?></div>
                                     </div>
                                     <div class="col-sm-1 text-center col-form-label">&</div>
                                     <div class="col-sm-4">
@@ -175,7 +176,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
                 </div>
             </div>
         </form>

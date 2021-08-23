@@ -2,8 +2,6 @@
 
 namespace App\Controllers;
 
-use App\Models\UcapanModel;
-
 class Home extends BaseController
 {	
 	public function index()
@@ -22,16 +20,17 @@ class Home extends BaseController
 					'rules' => 'required|max_length[50]',
 					'errors' => [
 						'required' => '{field} harus diisi!',
-						'max_length' => '{field} dan do\'a harus diisi!'
+						'max_length' => '{field} lebih dari 50 karakter!'
 					],
 				],
 				'ucapan' => [
 					'rules' => 'required',
-					'errors' => '{field} harus diisi!',
+					'errors' => [
+						'required' => '{field} dan do\'a harus diisi!',
+					],
 				]
 			])){
-			$validation = \Config\Services::validation();
-			return redirect()->to('/#guest')->withInput()->with('validation', $validation);
+			return redirect()->to('/#guest')->withInput();
 		}
 
 		$this->ucapanModel->save([

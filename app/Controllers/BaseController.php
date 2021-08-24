@@ -56,5 +56,6 @@ class BaseController extends Controller
 		// E.g.: $this->session = \Config\Services::session();
 		session();
 		$this->ucapanModel = new \App\Models\UcapanModel();
+		$this->weddingGiftModel = new \App\Models\WeddingGiftModel();
 	}
 }

@@ -34,6 +34,8 @@ $routes->setAutoRoute(true);
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
 $routes->get('/admin', 'Admin::index');
+$routes->delete('/admin/dltwg/(:num)', 'Admin::deleteWeddingGift/$1');
+$routes->get('/admin/dtwg/(:segment)', 'Admin::wedding_gift/$1');
 
 /*
  * --------------------------------------------------------------------

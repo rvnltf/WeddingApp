@@ -2,11 +2,14 @@
 
 namespace App\Controllers;
 
+use App\Models\WeddingGiftModel;
+
 class Admin extends BaseController
 {
-	public function __contructor()
+	// protected $weddingGiftModel;
+	public function __construct()
 	{
-		$this->DataUndanganModel = new \App\Models\DataUndanganModel();
+		// $this->weddingGiftModel = new WeddingGiftModel();
 	}
 	public function index()
 	{
@@ -24,6 +27,55 @@ class Admin extends BaseController
 			'validation' => \Config\Services::validation(),
 		];
 		return view('admin/pages/data_undangan', $data);
+	}
+	
+	public function wedding_gift($id = 0)
+	{
+		$data = [
+			'title' => 'Wedding Gift',
+			'wedding_gift' => $this->weddingGiftModel->getWeddingGift(),
+			'wedding_gift_id' => $id?$this->weddingGiftModel->getWeddingGift($id):'',
+			'validation' => \Config\Services::validation(),
+		];
+		return view('admin/pages/wedding_gift', $data);
+	}
+
+	public function simpanWeddingGift($id = 0)
+	{
+		if(!$this->validate([
+				'jenis' => [
+					'rules' => 'required|max_length[50]',
+					'errors' => [
+						'required' => '{field} harus diisi!',
+						'max_length' => '{field} lebih dari 50 karakter!'
+					],
+				],
+				'rincian' => [
+					'rules' => 'required',
+					'errors' => [
+						'required' => '{field} harus diisi!',
+					],
+				]
+			])){
+			return redirect()->to('/admin/wedding_gift')->withInput();
+		}
+
+		$this->weddingGiftModel->save([
+			'id' => $id,
+			'id_data' => 1,
+			'jenis' => $this->request->getVar('jenis'),
+			'rincian' => $this->request->getVar('rincian'),
+		]);
+
+		session()->setFlashdata('pesan', 'Data berhasil <strong>ditambahkan</strong>!');
+		return redirect()->to('/admin/wedding_gift');
+	}
+	
+	public function deleteWeddingGift($id)
+	{
+		$this->weddingGiftModel->delete($id);
+		session()->setFlashdata('pesan', 'Data berhasil <strong>dihapus</strong>!');
+		return redirect()->to('/admin/wedding_gift');
 	}
 
 	public function tambahDataUndangan(){

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Wedding Invitation Admin</title>
+    <title>Admin | <?=$title?></title>
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="/css/styles.css" rel="stylesheet" />
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -15,9 +15,16 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
     <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="/css/timepicker.css">
-    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <style>
+    .file {
+        visibility: hidden;
+        position: absolute;
+    }
 
+    .img-thumbnail {
+        margin-bottom: 10px;
+    }
+    </style>
 
 </head>
 
@@ -59,24 +66,22 @@
             <?= $this->renderSection('content') ?>
 
         </div>
-        <script src="assets/jquery.min.js"></script>
-        <script src="assets/timepicker.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Core theme JS-->
         <script src="/js/scripts.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+
         <script>
         $(function() {
             $('#awal_akad').timepicker({
-                showInputs: true
+                showInputs: false
             });
             $('#akhir_akad').timepicker({
-                showInputs: true
+                showInputs: false
             });
             $('#awal_resepsi').timepicker({
-                showInputs: true
+                showInputs: false
             });
             $('#akhir_resepsi').timepicker({
-                showInputs: true
+                showInputs: false
             });
             $('#tanggal_akad').datepicker({
                 uiLibrary: 'bootstrap4'

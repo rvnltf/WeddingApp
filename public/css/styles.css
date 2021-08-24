@@ -11314,12 +11314,3 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
     margin-left: -15rem;
   }
 }
-
-.file {
-  visibility: hidden;
-  position: absolute;
-}
-
-.img-thumbnail{
-  margin-bottom: 10px;
-}

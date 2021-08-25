@@ -90,6 +90,23 @@
                 uiLibrary: 'bootstrap4'
             });
 
+            $(document).on("click", ".browse-gallery", function() {
+                var file = $(this).parents().find(".file-gallery");
+                file.trigger("click");
+            });
+            $('.file-gallery').change(function(e) {
+                var fileName = e.target.files[0].name;
+                $("#file-gallery").val(fileName);
+
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    // get loaded data and render thumbnail.
+                    document.getElementById("preview-gallery").src = e.target.result;
+                };
+                // read the image file as a data URL.
+                reader.readAsDataURL(this.files[0]);
+            });
+
             $(document).on("click", ".browse-pria", function() {
                 var file = $(this).parents().find(".file-pria");
                 file.trigger("click");

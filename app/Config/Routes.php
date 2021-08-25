@@ -36,6 +36,10 @@ $routes->get('/', 'Home::index');
 $routes->get('/admin', 'Admin::index');
 $routes->delete('/admin/dltwg/(:num)', 'Admin::deleteWeddingGift/$1');
 $routes->get('/admin/dtwg/(:segment)', 'Admin::wedding_gift/$1');
+$routes->delete('/admin/dltcpn/(:num)', 'Admin::deleteUcapan/$1');
+$routes->get('/admin/dtcpn/(:segment)', 'Admin::ucapan/$1');
+$routes->delete('/admin/dltgllry/(:num)', 'Admin::deleteGallery/$1');
+$routes->get('/admin/dtgllry/(:segment)', 'Admin::gallery/$1');
 
 /*
  * --------------------------------------------------------------------

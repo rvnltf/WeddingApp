@@ -10,4 +10,12 @@ class UcapanModel extends Model
     protected $primaryKey = 'id_ucapan';  
 	protected $useTimestamps = true;
     protected $allowedFields = ['nama', 'ucapan'];
+
+    public function getUcapan($id = null)
+    {
+        if(empty($id)){
+            return $this->findAll();
+        }
+        return $this->where(['id_ucapan' => $id])->first();
+    }
 }

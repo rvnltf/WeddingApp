@@ -2,14 +2,15 @@
 
 namespace App\Controllers;
 
+use App\Models\GalleryModel;
 use App\Models\WeddingGiftModel;
 
 class Admin extends BaseController
 {
-	// protected $weddingGiftModel;
+	protected $galleryModel;
 	public function __construct()
 	{
-		// $this->weddingGiftModel = new WeddingGiftModel();
+		$this->galleryModel = new GalleryModel();
 	}
 	public function index()
 	{
@@ -27,6 +28,114 @@ class Admin extends BaseController
 			'validation' => \Config\Services::validation(),
 		];
 		return view('admin/pages/data_undangan', $data);
+	}
+	
+	public function gallery($id = 0)
+	{
+		$data = [
+			'title' => 'Gallery',
+			'gallery' => $this->galleryModel->getGallery(),
+			'gallery_id' => $id?$this->galleryModel->getGallery($id):'',
+			'validation' => \Config\Services::validation(),
+		];
+		return view('admin/pages/gallery', $data);
+	}
+
+	public function simpanGallery($id = 0)
+	{
+		if(!$this->validate([
+				'jenis' => [
+					'rules' => 'required|max_length[50]',
+					'errors' => [
+						'required' => '{field} harus diisi!',
+						'max_length' => '{field} lebih dari 50 karakter!'
+					],
+				],
+				'foto' => [
+					'rules' => 'uploaded[foto]|max_size[foto,2048]|is_image[foto]|mime_in[foto,image/jpg,image/jpeg,image/png]',
+					'errors' => [
+						'uploaded' => 'pilih {field} dipilih dulu!',
+						'max_size' => 'ukuran {field} terlalu besar!',
+						'is_image' => 'file yang dipilih bukan {field}!',
+						'mime_in' => 'file yang dipilih bukan {field}!',
+					],
+				]
+			])){
+			return redirect()->to('/admin/gallery')->withInput();
+		}
+
+		$foto = $this->request->getFile('foto');
+		if($this->request->getVar('foto') == 'gallery'){
+			$foto->move('img/gallery');
+		}
+		$foto->move('img/bg');
+
+		$this->galleryModel->save([
+			'id' => $id,
+			'id_data' => 1,
+			'jenis' => $this->request->getVar('jenis'),
+			'foto' => $foto->getName(),
+		]);
+
+		$teks = $id?'diperbaharui':'ditambahkan';
+		session()->setFlashdata('pesan', 'Data berhasil <strong>'.$teks.'</strong>!');
+		return redirect()->to('/admin/gallery');
+	}
+	
+	public function deleteGallery($id)
+	{
+		$this->galleryModel->delete($id);
+		session()->setFlashdata('pesan', 'Data berhasil <strong>dihapus</strong>!');
+		return redirect()->to('/admin/gallery');
+	}	
+	public function ucapan($id = 0)
+	{
+		$data = [
+			'title' => 'Wedding Gift',
+			'ucapan' => $this->ucapanModel->getUcapan(),
+			'ucapan_id' => $id?$this->ucapanModel->getUcapan($id):'',
+			'validation' => \Config\Services::validation(),
+		];
+		return view('admin/pages/ucapan', $data);
+	}
+
+	public function simpanUcapan($id = 0)
+	{
+		if(!$this->validate([
+				'jenis' => [
+					'rules' => 'required|max_length[50]',
+					'errors' => [
+						'required' => '{field} harus diisi!',
+						'max_length' => '{field} lebih dari 50 karakter!'
+					],
+				],
+				'ucapan' => [
+					'rules' => 'required',
+					'errors' => [
+						'required' => '{field} harus diisi!',
+					],
+				]
+			])){
+			return redirect()->to('/admin/ucapan')->withInput();
+		}
+
+		$this->ucapanModel->save([
+			'id' => $id,
+			// 'id_data' => 1,
+			'jenis' => $this->request->getVar('jenis'),
+			'ucapan' => $this->request->getVar('ucapan'),
+		]);
+
+		$teks = $id?'diperbaharui':'ditambahkan';
+		session()->setFlashdata('pesan', 'Data berhasil <strong>'.$teks.'</strong>!');
+		return redirect()->to('/admin/ucapan');
+	}
+	
+	public function deleteUcapan($id)
+	{
+		$this->ucapanModel->delete($id);
+		session()->setFlashdata('pesan', 'Data berhasil <strong>dihapus</strong>!');
+		return redirect()->to('/admin/ucapan');
 	}
 	
 	public function wedding_gift($id = 0)
@@ -67,7 +176,8 @@ class Admin extends BaseController
 			'rincian' => $this->request->getVar('rincian'),
 		]);
 
-		session()->setFlashdata('pesan', 'Data berhasil <strong>ditambahkan</strong>!');
+		$teks = $id?'diperbaharui':'ditambahkan';
+		session()->setFlashdata('pesan', 'Data berhasil <strong>'.$teks.'</strong>!');
 		return redirect()->to('/admin/wedding_gift');
 	}
 	

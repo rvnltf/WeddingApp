@@ -18,8 +18,7 @@
                         <th scope="col">#</th>
                         <th scope="col">Jenis</th>
                         <th scope="col">Rincian</th>
-                        <th scope="col"></th>
-                        <th scope="col"></th>
+                        <th scope="col" width="22%"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -49,9 +48,8 @@
             </table>
         </div>
         <div class="col-4">
-            <form action="/admin/simpanWeddingGift/" method="POST">
+            <form action="/admin/simpanWeddingGift/<?=@$wedding_gift_id['id']?>" method="POST">
                 <?=csrf_field()?>
-                <?php print($wedding_gift_id['id'])?>
                 <div class="row mb-3">
                     <label for="jenis" class="col-sm-2 col-form-label">Jenis</label>
                     <div class="col-sm-10">
@@ -70,7 +68,12 @@
                         <div class="invalid-feedback"><?=$validation->getError('rincian')?></div>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary float-right">Simpan data</button>
+                <div class="float-right">
+                    <?php if(@$wedding_gift_id['id']): ?>
+                    <a href="/admin/wedding_gift" class="btn btn-danger">Batal</a>
+                    <?php endif ?>
+                    <button type="submit" class="btn btn-primary">Simpan data</button>
+                </div>
             </form>
         </div>
     </div>

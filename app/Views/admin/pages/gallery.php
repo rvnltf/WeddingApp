@@ -52,7 +52,7 @@
             </table>
         </div>
         <div class="col-4">
-            <form action="/admin/simpanGallery/<?=@$gallery_id['id_gallery']?>" method="POST"
+            <form action="/admin/simpanGallery/<?=@$gallery_id?$gallery_id['id_gallery']:''?>" method="POST"
                 enctype="multipart/form-data">
                 <?=csrf_field()?>
                 <div class="row mb-3">
@@ -80,7 +80,7 @@
                     </div>
                 </div>
                 <div class="float-right">
-                    <?php if(@$gallery_id['id_gallery']): ?>
+                    <?php if(@$gallery_id): ?>
                     <a href="/admin/gallery" class="btn btn-danger">Batal</a>
                     <?php endif ?>
                     <button type="submit" class="btn btn-primary">Simpan data</button>

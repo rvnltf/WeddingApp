@@ -114,8 +114,8 @@
                     <label for="alamat_akad" class="col-sm-3 col-form-label">Alamat Akad</label>
                     <div class="col-sm-5">
                         <textarea class="form-control <?=$validation->hasError('alamat_akad')?'is-invalid':''?>"
-                            id="alamat_akad" name="alamat_akad" rows="2" placeholder="Tempat" aria-label="Tempat"
-                            value="<?=old('alamat_akad')?>"></textarea>
+                            id="alamat_akad" name="alamat_akad" rows="2" placeholder="Tempat"
+                            aria-label="Tempat"><?=old('alamat_akad')?></textarea>
                         <div class="invalid-feedback"><?=$validation->getError('alamat_akad')?></div>
                     </div>
                     <div class="col-sm-4">
@@ -130,8 +130,8 @@
                         Resepsi</label>
                     <div class="col-sm-5">
                         <textarea class="form-control <?=$validation->hasError('alamat_resepsi')?'is-invalid':''?>"
-                            id="alamat_resepsi" name="alamat_resepsi" rows="2" placeholder="Tempat" aria-label="Tempat"
-                            value="<?=old('alamat_resepsi')?>"></textarea>
+                            id="alamat_resepsi" name="alamat_resepsi" rows="2" placeholder="Tempat"
+                            aria-label="Tempat"><?=old('alamat_resepsi')?></textarea>
                         <div class="invalid-feedback"><?=$validation->getError('alamat_resepsi')?></div>
                     </div>
                     <div class="col-sm-4">
@@ -153,7 +153,7 @@
                         <img id="preview-pria" class="img-thumbnail">
                         <input type="file" name="file[]" class="file file-pria" accept="image/*" multiple>
                         <input type="hidden" disabled id="file-pria">
-                        <div class="invalid-feedback"><?=$validation->getError('file')?></div>
+                        <div class="invalid-feedback"><?=$validation->getError('file.0')?></div>
                         <button type="button" class="browse-pria btn btn-primary">Upload Foto
                             Pria</button>
                     </div>
@@ -161,7 +161,7 @@
                         <img id="preview-wanita" class="img-thumbnail">
                         <input type="file" name="file[]" class="file file-wanita" accept="image/*" multiple>
                         <input type="hidden" disabled id="file-wanita">
-                        <div class="invalid-feedback"><?=$validation->getError('file')?></div>
+                        <div class="invalid-feedback"><?=$validation->getError('file.1')?></div>
                         <button type="button" class="browse-wanita btn btn-primary">Upload Foto
                             Wanita</button>
                     </div>
@@ -174,17 +174,19 @@
                 <div class="row mb-3">
                     <div class="col">
                         <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="musik" name="musik" accept="audio/*"
-                                multiple>
+                            <input type="file"
+                                class="custom-file-input <?=$validation->hasError('file.2')?'is-invalid':''?>" id="
+                                file-musik" name="file[]" accept="audio/*" multiple>
                             <label class="custom-file-label" for="musik">Pilih Musik</label>
+                            <div class="invalid-feedback"><?=$validation->getError('file.2')?></div>
                         </div>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <label for="kalimat" class="col-sm-3 col-form-label">Kalimat Page Couple</label>
                     <div class="col-sm-9">
-                        <textarea class="form-control  <?=$validation->hasError('nickname_p')?'is-invalid':''?>"
-                            id="kalimat" rows="3"></textarea>
+                        <textarea class="form-control <?=$validation->hasError('kalimat')?'is-invalid':''?>"
+                            id="kalimat" name="kalimat" rows="3"><?=@old('kalimat')?></textarea>
                     </div>
                 </div>
             </div>

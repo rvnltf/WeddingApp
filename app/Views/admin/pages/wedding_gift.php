@@ -48,7 +48,7 @@
             </table>
         </div>
         <div class="col-4">
-            <form action="/admin/simpanWeddingGift/<?=@$wedding_gift_id['id']?>" method="POST">
+            <form action="/admin/simpanWeddingGift/<?=@$wedding_gift_id?$wedding_gift_id['id']:''?>" method="POST">
                 <?=csrf_field()?>
                 <div class="row mb-3">
                     <label for="jenis" class="col-sm-2 col-form-label">Jenis</label>
@@ -69,7 +69,7 @@
                     </div>
                 </div>
                 <div class="float-right">
-                    <?php if(@$wedding_gift_id['id']): ?>
+                    <?php if(@$wedding_gift_id): ?>
                     <a href="/admin/wedding_gift" class="btn btn-danger">Batal</a>
                     <?php endif ?>
                     <button type="submit" class="btn btn-primary">Simpan data</button>

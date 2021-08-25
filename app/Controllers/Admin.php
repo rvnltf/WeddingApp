@@ -277,19 +277,50 @@ class Admin extends BaseController
 						'required' => 'alamat resepsi harus diisi!'
 					],
 				],
-				'foto_pria' => [
-					'rules' => 'uploaded[sampul]|max_size[foto_pria,1024]|is_image[foto_pria]|mime_in[foto_pria,image/jpg,image/jpeg,image/png]',
+				'file.0' => [
+					'rules' => 'uploaded[file.0]|max_size[file.0,2048]|is_image[file.0]|mime_in[file.0,image/jpg,image/jpeg,image/png]',
 					'errors' => [
-						'uploaded' => 'Pilih gambar terlebih dahulu!',
-						'max_size' => 'Ukuran gambar terlalu besar!',
+						'uploaded' => 'Pilih foto terlebih dahulu!',
+						'max_size' => 'Ukuran foto terlalu besar!',
 						'is_image' => 'File bukan foto!',
 						'mime_in' => 'File bukan foto!',
+					],
+				],
+				'file.1' => [
+					'rules' => 'uploaded[file.1]|max_size[file.1,2048]|is_image[file.01|mime_in[file.1,image/jpg,image/jpeg,image/png]',
+					'errors' => [
+						'uploaded' => 'Pilih foto terlebih dahulu!',
+						'max_size' => 'Ukuran foto terlalu besar!',
+						'is_image' => 'File bukan foto!',
+						'mime_in' => 'File bukan foto!',
+					],
+				],
+				'file.2' => [
+					'rules' => 'uploaded[file.2]|max_size[file.2,10240]',
+					'errors' => [
+						'uploaded' => 'Pilih musik terlebih dahulu!',
+						'max_size' => 'Ukuran musik terlalu besar!',
+					],
+				],
+				'kalimat' => [
+					'rules' => 'required',
+					'errors' => [
+						'required' => 'kalimat resepsi harus diisi!'
 					],
 				],
 			])){
 			return redirect()->to('/admin/tambahDataUndangan')->withInput();
 		}
 
+		$foto1 = $this->request->getFile('file.0');
+		$foto2 = $this->request->getFile('file.1');
+		$musik = $this->request->getFile('file.2');
+		$namaFoto1 = $foto1->getRandomName();
+		$namaFoto2 = $foto2->getRandomName();
+		$namaMusik = $musik->getRandomName();
+		$foto1->move('img/foto', $namaFoto1);
+		$foto2->move('img/foto', $namaFoto2);
+		$musik->move('music', $namaMusik);
 
 		$this->DataUndanganModel->save([
 			'nick_pria' => $this->request->getVar('nickname_p'),
@@ -305,9 +336,9 @@ class Admin extends BaseController
 			'link_akad' => $this->request->getVar('link_akad'),
 			'alamat_resepsi' => $this->request->getVar('alamat_resepsi'),
 			'link_resepsi' => $this->request->getVar('link_resepsi'),
-			'foto_pria' => $this->request->getVar('foto_pria'),
-			'foto_wanita' => $this->request->getVar('foto_wanita'),
-			'musik' => $this->request->getVar('musik'),
+			'foto_pria' => $namaFoto1,
+			'foto_wanita' => $namaFoto2,
+			'musik' => $namaMusik,
 			'kalimat' => $this->request->getVar('kalimat'),
 			'is_actived' => 1,
 		]);

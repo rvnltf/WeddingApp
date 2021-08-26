@@ -16,6 +16,7 @@
                 <thead>
                     <tr>
                         <th scope="col">#</th>
+                        <th scope="col">Pasangan</th>
                         <th scope="col">Jenis</th>
                         <th scope="col">Rincian</th>
                         <th scope="col" width="22%"></th>
@@ -24,8 +25,12 @@
                 <tbody>
                     <?php $i = 1; ?>
                     <?php foreach ($wedding_gift as $value_wg) : ?>
+                    <?php foreach ($pasangan as $value_pasangan) : ?>
                     <tr>
                         <th scope="row"><?=$i?></th>
+                        <td>
+                            <?=@$value_wg['id_data']==$value_pasangan['id']?$value_pasangan['nick_pria'].' & '.$value_pasangan['nick_wanita']: ''?>
+                        </td>
                         <td><?=$value_wg['jenis']?></td>
                         <td><?=$value_wg['rincian']?></td>
                         <td>
@@ -44,15 +49,33 @@
                     </tr>
                     <?php $i++; ?>
                     <?php endforeach; ?>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
         </div>
         <div class="col-4">
-            <form action="/admin/simpanWeddingGift/<?=@$wedding_gift_id?$wedding_gift_id['id']:''?>" method="POST">
+            <form action="/admin/simpanWeddingGift/<?=@$wedding_gift_id?$wedding_gift_id['id']:old('id')?>"
+                method="POST">
                 <?=csrf_field()?>
                 <div class="row mb-3">
-                    <label for="jenis" class="col-sm-2 col-form-label">Jenis</label>
-                    <div class="col-sm-10">
+                    <label for="id_data" class="col-sm-3 col-form-label">Nama Pasangan</label>
+                    <div class="col-sm-9">
+                        <select class="form-control <?=$validation->hasError('id_data')?'is-invalid':''?>" id="id_data"
+                            name="id_data" placeholder="Pasangan" aria-label="Pasangan">
+                            <option value="">- Pilih Pasangan -</option>
+                            <?php foreach ($pasangan as $value_pasangan) : ?>
+                            <option value="<?=$value_pasangan['id']?>"
+                                <?=@$wedding_gift_id['id_data']==$value_pasangan['id']?'selected': ''?>>
+                                <?=$value_pasangan['nick_pria'] ?> - <?= $value_pasangan['nick_wanita'] ?>
+                            </option>
+                            <?php endforeach ?>
+                        </select>
+                        <div class="invalid-feedback"><?=$validation->getError('id_data')?></div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="jenis" class="col-sm-3 col-form-label">Jenis</label>
+                    <div class="col-sm-9">
                         <input type="text" class="form-control <?=$validation->hasError('jenis')?'is-invalid':''?>"
                             id="jenis" name="jenis" placeholder="Jenis Wedding Gift" aria-label="Jenis Wedding Gift"
                             value="<?=$wedding_gift_id?$wedding_gift_id['jenis']:old('jenis')?>">
@@ -60,8 +83,8 @@
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="rincian" class="col-sm-2 col-form-label">Rincian</label>
-                    <div class="col-sm-10">
+                    <label for="rincian" class="col-sm-3 col-form-label">Rincian</label>
+                    <div class="col-sm-9">
                         <textarea class="form-control  <?=$validation->hasError('rincian')?'is-invalid':''?>"
                             id="rincian" name="rincian" rows="5" placeholder="Rincian"
                             aria-label="Rincian"><?=$wedding_gift_id?$wedding_gift_id['rincian']:old('rincian')?></textarea>

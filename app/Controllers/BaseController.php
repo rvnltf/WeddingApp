@@ -57,5 +57,6 @@ class BaseController extends Controller
 		session();
 		$this->ucapanModel = new \App\Models\UcapanModel();
 		$this->weddingGiftModel = new \App\Models\WeddingGiftModel();
+		$this->galleryModel = new \App\Models\GalleryModel();
 	}
 }

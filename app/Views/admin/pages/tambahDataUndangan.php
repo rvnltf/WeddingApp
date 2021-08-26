@@ -65,11 +65,11 @@
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="awal_akad" class="col-sm-3 col-form-label">Waktu Akad</label>
+                    <label for="akad_awal" class="col-sm-3 col-form-label">Waktu Akad</label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control <?=$validation->hasError('awal_akad')?'is-invalid':''?>"
-                            id="awal_akad" name="awal_akad" placeholder="Awal" aria-label="Awal"
-                            value="<?=old('awal_akad')?>">
+                        <input type="text" class="form-control <?=$validation->hasError('akad_awal')?'is-invalid':''?>"
+                            id="akad_awal" name="akad_awal" placeholder="Awal" aria-label="Awal"
+                            value="<?=old('akad_awal')?>">
                         <span class="input-group-addon">
                             <span class="glyphicon glyphicon-time"></span>
                         </span>
@@ -77,37 +77,37 @@
                     </div>
                     <div class="col-sm-1 text-center col-form-label">-</div>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control <?=$validation->hasError('akhir_akad')?'is-invalid':''?>"
-                            id="akhir_akad" name="akhir_akad" placeholder="Akhir" aria-label="Akhir"
-                            value="<?=old('akhir_akad')?>">
+                        <input type="text" class="form-control <?=$validation->hasError('akad_akhir')?'is-invalid':''?>"
+                            id="akad_akhir" name="akad_akhir" placeholder="Akhir" aria-label="Akhir"
+                            value="<?=old('akad_akhir')?>">
                         <span class="input-group-addon">
                             <span class="glyphicon glyphicon-time"></span>
                         </span>
-                        <div class="invalid-feedback"><?=$validation->getError('akhir_akad')?></div>
+                        <div class="invalid-feedback"><?=$validation->getError('akad_akhir')?></div>
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="awal_resepsi" class="col-sm-3 col-form-label">Waktu Resepsi</label>
+                    <label for="resepsi_awal" class="col-sm-3 col-form-label">Waktu Resepsi</label>
                     <div class="col-sm-4">
                         <input type="text"
-                            class="form-control <?=$validation->hasError('awal_resepsi')?'is-invalid':''?>"
-                            id="awal_resepsi" name="awal_resepsi" placeholder="Awal" aria-label="Awal"
-                            value="<?=old('awal_resepsi')?>">
+                            class="form-control <?=$validation->hasError('resepsi_awal')?'is-invalid':''?>"
+                            id="resepsi_awal" name="resepsi_awal" placeholder="Awal" aria-label="Awal"
+                            value="<?=old('resepsi_awal')?>">
                         <span class="input-group-addon">
                             <span class="glyphicon glyphicon-time"></span>
                         </span>
-                        <div class="invalid-feedback"><?=$validation->getError('awal_resepsi')?></div>
+                        <div class="invalid-feedback"><?=$validation->getError('resepsi_awal')?></div>
                     </div>
                     <div class="col-sm-1 text-center col-form-label">-</div>
                     <div class="col-sm-4">
                         <input type="text"
-                            class="form-control <?=$validation->hasError('akhir_resepsi')?'is-invalid':''?>"
-                            id="akhir_resepsi" name="akhir_resepsi" placeholder="Akhir" aria-label="Akhir"
-                            value="<?=old('akhir_resepsi')?>">
+                            class="form-control <?=$validation->hasError('resepsi_akhir')?'is-invalid':''?>"
+                            id="resepsi_akhir" name="resepsi_akhir" placeholder="Akhir" aria-label="Akhir"
+                            value="<?=old('resepsi_akhir')?>">
                         <span class="input-group-addon">
                             <span class="glyphicon glyphicon-time"></span>
                         </span>
-                        <div class="invalid-feedback"><?=$validation->getError('akhir_resepsi')?></div>
+                        <div class="invalid-feedback"><?=$validation->getError('resepsi_akhir')?></div>
                     </div>
                 </div>
                 <div class="row mb-3">

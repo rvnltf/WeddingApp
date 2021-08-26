@@ -1,7 +1,7 @@
 <?=$this->extend('admin/layout/template');?>
 <?=$this->section('content');?>
 <div class="container-fluid mt-3">
-    <h1>Gallery</h1>
+    <h1>Background</h1>
     <div class="row">
         <div class="col-8">
             <?php if(session()->getFlashdata('pesan')):?>
@@ -23,20 +23,18 @@
                 </thead>
                 <tbody>
                     <?php $i = 1; ?>
-                    <?php foreach ($gallery as $value_gallery) : ?>
-                    <?php foreach ($pasangan as $value_pasangan) : ?>
+                    <?php foreach ($background as $value_bg) : ?>
                     <tr>
                         <th scope="row"><?=$i?></th>
-                        <td><?=$value_gallery['id_data']==$value_pasangan['id']?$value_pasangan['nick_pria'].' & '.$value_pasangan['nick_wanita']: ''?>
+                        <td><?=$value_bg['id_data']?></td>
+                        <td>
+                            <img src="/img/bg/<?=$value_bg['foto']?>" alt="Foto" width="200">
                         </td>
                         <td>
-                            <img src="/img/gallery/<?=$value_gallery['foto']?>" alt="Foto" width="200">
-                        </td>
-                        <td>
-                            <a href="/admin/dtgllry/<?=$value_gallery['id']?>" class=" btn btn-info">
+                            <a href="/admin/dtgllry/<?=$value_bg['id']?>" class=" btn btn-info">
                                 <span class="glyphicon glyphicon-edit" aria-hidden="true">Edit</span>
                             </a>
-                            <form action="/admin/dltgllry/<?=$value_gallery['id']?>" method="POST" class="d-inline">
+                            <form action="/admin/dltgllry/<?=$value_bg['id']?>" method="POST" class="d-inline">
                                 <?= csrf_field(); ?>
                                 <input type="hidden" name="_method" value="DELETE">
                                 <button type="submit" class="btn btn-danger"
@@ -48,48 +46,63 @@
                     </tr>
                     <?php $i++; ?>
                     <?php endforeach; ?>
-                    <?php endforeach; ?>
                 </tbody>
             </table>
         </div>
         <div class="col-4">
-            <form action="/admin/simpanGallery/<?=@$gallery_id?$gallery_id['id']:''?>" method="POST"
+            <form action="/admin/simpanBackground/<?=@$background_id?$background_id['id']:''?>" method="POST"
                 enctype="multipart/form-data">
                 <?=csrf_field()?>
-                <input type="hidden" name="id" id="id" value="<?=@$gallery_id?$gallery_id['id']:''?>">
-                <input type="hidden" name="foto-lama" id="foto-lama" value="<?=@$gallery_id?$gallery_id['foto']:''?>">
-
+                <input type="hidden" name="id" id="id" value="<?=@$background_id?$background_id['id']:''?>">
+                <input type="hidden" name="foto-lama" id="foto-lama"
+                    value="<?=@$background_id?$background_id['foto']:''?>">
+                <?php
+                    $bg1='';
+                    $bg2='';
+                    if($background_id){
+                        if($background_id['jenis']=='bg1'){
+                            $bg1 = 'selected=true';
+                        }
+                        if($background_id['jenis']=='bg2'){
+                            $bg2 = 'selected=true';
+                        }
+                    }
+                    if(old('jenis')=='bg1'){
+                        $bg1 = 'selected';
+                    }elseif(old('jenis')=='bg2'){
+                        $bg2 = 'selected';
+                    }
+                ?>
                 <div class="row mb-3">
-                    <label for="id_data" class="col-sm-3 col-form-label">Nama Pasangan</label>
-                    <div class="col-sm-9">
+                    <label for="jenis" class="col-sm-2 col-form-label">Jenis</label>
+                    <div class="col-sm-10">
                         <select class="form-control <?=$validation->hasError('id_data')?'is-invalid':''?>" id="id_data"
-                            name="id_data" placeholder="Pasangan" aria-label="Pasangan">
-                            <option value="">- Pilih Pasangan -</option>
-                            <?php foreach ($pasangan as $value_pasangan) : ?>
-                            <option value="<?=$value_pasangan['id']?>"
-                                <?=@$gallery_id['id_data']==$value_pasangan['id']?'selected': ''?>>
-                                <?=$value_pasangan['nick_pria'] ?> - <?= $value_pasangan['nick_wanita'] ?>
-                            </option>
-                            <?php endforeach ?>
+                            name="id_data" placeholder="id_data" aria-label="id_data">
+                            <option value="">- Pilih
+                                Jenis Foto -</option>
+                            <option value="bg1" <?=$bg1?>>
+                                Background 1</option>
+                            <option value="bg2" <?=$bg2?>>
+                                Background 2</option>
                         </select>
                         <div class="invalid-feedback"><?=$validation->getError('id_data')?></div>
                     </div>
                 </div>
                 <div class="row mb-3 text-center">
                     <div class="col">
-                        <img src="/img/gallery/<?=@$gallery_id?$gallery_id['foto']:'default.jpg'?>" id="preview-gallery"
-                            class="img-thumbnail">
+                        <img src="/img/bg/<?=@$background_id?$background_id['foto']:'default.jpg'?>"
+                            id="preview-background" class="img-thumbnail">
                         <input type="file" name="foto"
-                            class="file file-gallery <?=$validation->hasError('foto')?'is-invalid':''?>"
+                            class="file file-background <?=$validation->hasError('foto')?'is-invalid':''?>"
                             accept="image/*">
-                        <input type="hidden" disabled id="file-gallery">
-                        <button type="button" class="browse-gallery btn btn-primary">Upload Foto</button>
+                        <input type="hidden" disabled id="file-background">
+                        <button type="button" class="browse-background btn btn-primary">Upload Foto</button>
                         <div class="invalid-feedback"><?=$validation->getError('foto')?></div>
                     </div>
                 </div>
                 <div class="float-right">
-                    <?php if(@$gallery_id): ?>
-                    <a href="/admin/gallery" class="btn btn-danger">Batal</a>
+                    <?php if(@$background_id): ?>
+                    <a href="/admin/background" class="btn btn-danger">Batal</a>
                     <?php endif ?>
                     <button type="submit" class="btn btn-primary">Simpan data</button>
                 </div>

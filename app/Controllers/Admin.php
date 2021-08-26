@@ -2,15 +2,14 @@
 
 namespace App\Controllers;
 
-use App\Models\GalleryModel;
-use App\Models\WeddingGiftModel;
+use App\Models\DataUndanganModel;
 
 class Admin extends BaseController
 {
-	protected $galleryModel;
+	protected $dataUndanganModel;
 	public function __construct()
 	{
-		$this->galleryModel = new GalleryModel();
+		$this->dataUndanganModel = new DataUndanganModel();
 	}
 	public function index()
 	{
@@ -26,6 +25,7 @@ class Admin extends BaseController
 		$data = [
 			'title' => 'Data Undangan',
 			'validation' => \Config\Services::validation(),
+			'data_undangan' => $this->dataUndanganModel->getdataUndangan(),
 		];
 		return view('admin/pages/data_undangan', $data);
 	}
@@ -35,6 +35,7 @@ class Admin extends BaseController
 		$data = [
 			'title' => 'Gallery',
 			'gallery' => $this->galleryModel->getGallery(),
+			'pasangan' => $this->dataUndanganModel->getdataUndangan(),
 			'gallery_id' => $id?$this->galleryModel->getGallery($id):'',
 			'validation' => \Config\Services::validation(),
 		];
@@ -44,37 +45,44 @@ class Admin extends BaseController
 	public function simpanGallery($id = 0)
 	{
 		if(!$this->validate([
-				'jenis' => [
-					'rules' => 'required|max_length[50]',
+				'id_data' => [
+					'rules' => 'required',
 					'errors' => [
-						'required' => '{field} harus diisi!',
-						'max_length' => '{field} lebih dari 50 karakter!'
+						'required' => 'pasangan harus diisi!'
 					],
 				],
 				'foto' => [
-					'rules' => 'uploaded[foto]|max_size[foto,2048]|is_image[foto]|mime_in[foto,image/jpg,image/jpeg,image/png]',
+					'rules' => 'max_size[foto,2048]|is_image[foto]|mime_in[foto,image/jpg,image/jpeg,image/png]',
 					'errors' => [
-						'uploaded' => 'pilih {field} dipilih dulu!',
 						'max_size' => 'ukuran {field} terlalu besar!',
 						'is_image' => 'file yang dipilih bukan {field}!',
 						'mime_in' => 'file yang dipilih bukan {field}!',
 					],
 				]
 			])){
-			return redirect()->to('/admin/gallery')->withInput();
+				if($id){
+					return redirect()->to('/admin/dtgllry/'.$this->request->getVar('id'))->withInput();
+				}
+				return redirect()->to('/admin/gallery')->withInput();
 		}
-
 		$foto = $this->request->getFile('foto');
-		if($this->request->getVar('foto') == 'gallery'){
-			$foto->move('img/gallery');
+		$namaFoto = $foto->getRandomName();
+		if($foto->getError() == 4){
+			$namaFoto = $this->request->getVar('foto-lama');			
+		} else {
+			if($this->request->getVar('foto-lama')){
+				$foto->move('img/gallery', $namaFoto);
+				unlink('img/gallery/'.$this->request->getVar('foto-lama'));
+			} else {
+				$foto->move('img/gallery', $namaFoto);
+			}
+			
 		}
-		$foto->move('img/bg');
-
+		
 		$this->galleryModel->save([
 			'id' => $id,
-			'id_data' => 1,
-			'jenis' => $this->request->getVar('jenis'),
-			'foto' => $foto->getName(),
+			'id_data' => $this->request->getVar('id_data'),
+			'foto' => $namaFoto,
 		]);
 
 		$teks = $id?'diperbaharui':'ditambahkan';
@@ -84,6 +92,13 @@ class Admin extends BaseController
 	
 	public function deleteGallery($id)
 	{
+		$gallery = $this->galleryModel->getGallery($id);
+		if($gallery['foto'] != 'default.jpg'){
+			if($gallery['jenis'] == 'gallery'){
+				unlink('img/gallery/'.$gallery['foto']);
+			}
+			unlink('img/bg/'.$gallery['foto']);
+		}
 		$this->galleryModel->delete($id);
 		session()->setFlashdata('pesan', 'Data berhasil <strong>dihapus</strong>!');
 		return redirect()->to('/admin/gallery');
@@ -143,6 +158,7 @@ class Admin extends BaseController
 		$data = [
 			'title' => 'Wedding Gift',
 			'wedding_gift' => $this->weddingGiftModel->getWeddingGift(),
+			'pasangan' => $this->dataUndanganModel->getdataUndangan(),
 			'wedding_gift_id' => $id?$this->weddingGiftModel->getWeddingGift($id):'',
 			'validation' => \Config\Services::validation(),
 		];
@@ -152,6 +168,12 @@ class Admin extends BaseController
 	public function simpanWeddingGift($id = 0)
 	{
 		if(!$this->validate([
+				'id_data' => [
+					'rules' => 'required',
+					'errors' => [
+						'required' => 'pasangan harus diisi!'
+					],
+				],
 				'jenis' => [
 					'rules' => 'required|max_length[50]',
 					'errors' => [
@@ -171,7 +193,7 @@ class Admin extends BaseController
 
 		$this->weddingGiftModel->save([
 			'id' => $id,
-			'id_data' => 1,
+			'id_data' => $this->request->getVar('id_data'),
 			'jenis' => $this->request->getVar('jenis'),
 			'rincian' => $this->request->getVar('rincian'),
 		]);
@@ -228,38 +250,38 @@ class Admin extends BaseController
 					],
 				],
 				'tanggal_akad' => [
-					'rules' => 'required|valid_date[d/m/Y]',
+					'rules' => 'required|valid_date[m/d/Y]',
 					'errors' => [
 						'required' => 'tanggal akad harus diisi!',
 						'valid_date' => 'tanggal akad tidak valid!'
 					],
 				],
 				'tanggal_resepsi' => [
-					'rules' => 'required|valid_date[d/m/Y]',
+					'rules' => 'required|valid_date[m/d/Y]',
 					'errors' => [
 						'required' => 'tanggal resepsi harus diisi!',
 						'valid_date' => 'tanggal resepsi tidak valid!'
 					],
 				],
-				'awal_akad' => [
+				'akad_awal' => [
 					'rules' => 'required',
 					'errors' => [
 						'required' => 'waktu akad harus diisi!'
 					],
 				],
-				'akhir_akad' => [
+				'akad_akhir' => [
 					'rules' => 'required',
 					'errors' => [
 						'required' => 'waktu akad harus diisi!'
 					],
 				],
-				'awal_resepsi' => [
+				'resepsi_awal' => [
 					'rules' => 'required',
 					'errors' => [
 						'required' => 'waktu resepsi harus diisi!'
 					],
 				],
-				'akhir_resepsi' => [
+				'resepsi_akhir' => [
 					'rules' => 'required',
 					'errors' => [
 						'required' => 'waktu resepsi harus diisi!'
@@ -277,31 +299,31 @@ class Admin extends BaseController
 						'required' => 'alamat resepsi harus diisi!'
 					],
 				],
-				'file.0' => [
-					'rules' => 'uploaded[file.0]|max_size[file.0,2048]|is_image[file.0]|mime_in[file.0,image/jpg,image/jpeg,image/png]',
-					'errors' => [
-						'uploaded' => 'Pilih foto terlebih dahulu!',
-						'max_size' => 'Ukuran foto terlalu besar!',
-						'is_image' => 'File bukan foto!',
-						'mime_in' => 'File bukan foto!',
-					],
-				],
-				'file.1' => [
-					'rules' => 'uploaded[file.1]|max_size[file.1,2048]|is_image[file.01|mime_in[file.1,image/jpg,image/jpeg,image/png]',
-					'errors' => [
-						'uploaded' => 'Pilih foto terlebih dahulu!',
-						'max_size' => 'Ukuran foto terlalu besar!',
-						'is_image' => 'File bukan foto!',
-						'mime_in' => 'File bukan foto!',
-					],
-				],
-				'file.2' => [
-					'rules' => 'uploaded[file.2]|max_size[file.2,10240]',
-					'errors' => [
-						'uploaded' => 'Pilih musik terlebih dahulu!',
-						'max_size' => 'Ukuran musik terlalu besar!',
-					],
-				],
+				// 'file.0' => [
+				// 	'rules' => 'uploaded[file.0]|max_size[file.0,2048]|is_image[file.0]|mime_in[file.0,image/jpg,image/jpeg,image/png]',
+				// 	'errors' => [
+				// 		'uploaded' => 'Pilih foto terlebih dahulu!',
+				// 		'max_size' => 'Ukuran foto terlalu besar!',
+				// 		'is_image' => 'File bukan foto!',
+				// 		'mime_in' => 'File bukan foto!',
+				// 	],
+				// ],
+				// 'file.1' => [
+				// 	'rules' => 'uploaded[file.1]|max_size[file.1,2048]|is_image[file.01|mime_in[file.1,image/jpg,image/jpeg,image/png]',
+				// 	'errors' => [
+				// 		'uploaded' => 'Pilih foto terlebih dahulu!',
+				// 		'max_size' => 'Ukuran foto terlalu besar!',
+				// 		'is_image' => 'File bukan foto!',
+				// 		'mime_in' => 'File bukan foto!',
+				// 	],
+				// ],
+				// 'file.2' => [
+				// 	'rules' => 'uploaded[file.2]|max_size[file.2,10240]',
+				// 	'errors' => [
+				// 		'uploaded' => 'Pilih musik terlebih dahulu!',
+				// 		'max_size' => 'Ukuran musik terlalu besar!',
+				// 	],
+				// ],
 				'kalimat' => [
 					'rules' => 'required',
 					'errors' => [
@@ -311,6 +333,7 @@ class Admin extends BaseController
 			])){
 			return redirect()->to('/admin/tambahDataUndangan')->withInput();
 		}
+
 
 		$foto1 = $this->request->getFile('file.0');
 		$foto2 = $this->request->getFile('file.1');
@@ -322,14 +345,15 @@ class Admin extends BaseController
 		$foto2->move('img/foto', $namaFoto2);
 		$musik->move('music', $namaMusik);
 
-		$this->DataUndanganModel->save([
+		$this->dataUndanganModel->save([
 			'nick_pria' => $this->request->getVar('nickname_p'),
 			'nick_wanita' => $this->request->getVar('nickname_w'),
 			'fullname_pria' => $this->request->getVar('fullname_p'),
 			'fullname_wanita' => $this->request->getVar('fullname_w'),
-			'tanggal_akad' => $this->request->getVar('tanggal_akad'),
-			'tanggal_resepsi' => $this->request->getVar('tanggal_resepsi'),
+			'tanggal_akad' => date('Y-m-d', strtotime($this->request->getVar('tanggal_akad'))),
+			'tanggal_resepsi' => date('Y-m-d',strtotime($this->request->getVar('tanggal_resepsi'))),
 			'akad_awal' => $this->request->getVar('akad_awal'),
+			'akad_akhir' => $this->request->getVar('akad_akhir'),
 			'resepsi_awal' => $this->request->getVar('resepsi_awal'),
 			'resepsi_akhir' => $this->request->getVar('resepsi_akhir'),
 			'alamat_akad' => $this->request->getVar('alamat_akad'),
@@ -344,6 +368,6 @@ class Admin extends BaseController
 		]);
 		
 		
-		return redirect()->to('/admin/tambahDataUndangan');
+		return redirect()->to('/admin/data_undangan');
 	}
 }

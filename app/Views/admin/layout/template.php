@@ -37,6 +37,8 @@
                 <a class="list-group-item list-group-item-action list-group-item-light p-3"
                     href="/admin/data_undangan">Data Undangan</a>
                 <a class="list-group-item list-group-item-action list-group-item-light p-3"
+                    href="/admin/background">Background</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3"
                     href="/admin/gallery">Gallery</a>
                 <a class="list-group-item list-group-item-action list-group-item-light p-3"
                     href="/admin/ucapan">Ucapan</a>
@@ -71,16 +73,16 @@
 
         <script>
         $(function() {
-            $('#awal_akad').timepicker({
+            $('#akad_awal').timepicker({
                 showInputs: false
             });
-            $('#akhir_akad').timepicker({
+            $('#akad_akhir').timepicker({
                 showInputs: false
             });
-            $('#awal_resepsi').timepicker({
+            $('#resepsi_awal').timepicker({
                 showInputs: false
             });
-            $('#akhir_resepsi').timepicker({
+            $('#resepsi_akhir').timepicker({
                 showInputs: false
             });
             $('#tanggal_akad').datepicker({

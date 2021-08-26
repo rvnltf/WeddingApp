@@ -4,11 +4,18 @@ namespace App\Controllers;
 
 class Home extends BaseController
 {	
+	
 	public function index()
 	{
 		$ucapan = $this->ucapanModel->findAll();
+		$weddingGift = $this->weddingGiftModel->getWeddingGift();
+		$gallery = $this->galleryModel->getGallery();
+		$dataUndangan = $this->dataUndanganModel->getDataAktif();
 		$data = [
 			'ucapan' => $ucapan,
+			'gallery' => $gallery,
+			'wedding_gift' => $weddingGift,
+			'data_undangan' => $dataUndangan,
 			'validation' => \Config\Services::validation(),
 		];
 		return view('invitation/index', $data);

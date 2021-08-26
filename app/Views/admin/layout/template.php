@@ -92,10 +92,27 @@
                 uiLibrary: 'bootstrap4'
             });
 
+            $(document).on("click", ".browse-background", function() {
+                var file = $(this).parents().find(".file-background");
+                file.trigger("click");
+            });
+            $('.file-background').change(function(e) {
+                var fileName = e.target.files[0].name;
+                $("#file-background").val(fileName);
+
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    // get loaded data and render thumbnail.
+                    document.getElementById("preview-background").src = e.target.result;
+                };
+                // read the image file as a data URL.
+                reader.readAsDataURL(this.files[0]);
+            });
             $(document).on("click", ".browse-gallery", function() {
                 var file = $(this).parents().find(".file-gallery");
                 file.trigger("click");
             });
+
             $('.file-gallery').change(function(e) {
                 var fileName = e.target.files[0].name;
                 $("#file-gallery").val(fileName);

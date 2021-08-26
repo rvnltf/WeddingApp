@@ -53,12 +53,11 @@
             </table>
         </div>
         <div class="col-4">
-            <form action="/admin/simpanGallery/<?=@$gallery_id?$gallery_id['id']:''?>" method="POST"
+            <form action="/admin/simpanGallery/<?=@$gallery_id?$gallery_id['id']:old('id')?>" method="POST"
                 enctype="multipart/form-data">
                 <?=csrf_field()?>
                 <input type="hidden" name="id" id="id" value="<?=@$gallery_id?$gallery_id['id']:''?>">
                 <input type="hidden" name="foto-lama" id="foto-lama" value="<?=@$gallery_id?$gallery_id['foto']:''?>">
-
                 <div class="row mb-3">
                     <label for="id_data" class="col-sm-3 col-form-label">Nama Pasangan</label>
                     <div class="col-sm-9">
@@ -67,7 +66,7 @@
                             <option value="">- Pilih Pasangan -</option>
                             <?php foreach ($pasangan as $value_pasangan) : ?>
                             <option value="<?=$value_pasangan['id']?>"
-                                <?=@$gallery_id['id_data']==$value_pasangan['id']?'selected': ''?>>
+                                <?=@$gallery_id?($gallery_id['id_data']==$value_pasangan['id']?'selected': ''):''?>>
                                 <?=$value_pasangan['nick_pria'] ?> - <?= $value_pasangan['nick_wanita'] ?>
                             </option>
                             <?php endforeach ?>

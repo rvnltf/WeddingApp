@@ -7,7 +7,7 @@ use CodeIgniter\Model;
 class GalleryModel extends Model
 {
     protected $table = 'm_gallery';
-    protected $allowedFields = ['id_data','jenis', 'foto'];
+    protected $allowedFields = ['id_data', 'foto'];
 
     public function getGallery($id = null)
     {

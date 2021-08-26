@@ -93,7 +93,7 @@
     }
 
     .jumbotron {
-        min-height: 616px;
+        min-height: 660px;
         background-image: url("/img/bg/prewedding.jpg");
         background-attachment: fixed;
         background-repeat: no-repeat;
@@ -174,10 +174,7 @@
         display: inline-block;
     }
 
-    .kalimat,
-    .orangtua,
-    .alamat,
-    .tanggal {
+    p {
         white-space: pre-line;
     }
 
@@ -238,6 +235,10 @@
             transition: font-size 0.2s;
         }
 
+        .jumbotron {
+            min-height: 820px;
+        }
+
         svg {
             width: 30px;
             transition: width 0.2s;
@@ -258,8 +259,12 @@
     <div id="home" class="jumbotron text-center">
         <div class="box">
             <h3 class="item the-wedding-of">The Wedding of</h3>
-            <h1 class="item nickname">Arrum & Neng</h1>
-            <h3 class="item the-wedding-of">21.12.2021</h3>
+            <h1 class="item nickname">
+                <?=$data_undangan['nick_wanita']?> & <?=$data_undangan['nick_pria']?>
+            </h1>
+            <h3 class="item the-wedding-of">
+                <?=date('d.m.Y', strtotime($data_undangan['tanggal_akad']))?>
+            </h3>
             <p class="item untuk the-wedding-of">Dear : Anonim</p>
             <a href="#couple" class="item buka-undangan">Buka Undangan</a>
         </div>
@@ -270,12 +275,11 @@
                 <div class="col"></div>
                 <div class="col-10">
                     <img src="/img/icon/en.png" alt="E & N" width="200">
-                    <p class="kalimat">Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan pasangan-pasangan
-                        untukmu
+                    <?=$data_undangan['kalimat']?$data_undangan['kalimat']:'<p>Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan pasangan-pasangan untukmu
                         dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya, dan Dia menjadikan di
                         antaramu rasa kasih dan sayang. Sungguh, pada yang demikian itu benar-benar terdapat tanda-tanda
                         (kebesaran Allah) bagi kaum yang berpikir.
-                        (Ar-Rum: 21)</p>
+                        (Ar-Rum: 21)</p>'?>
                 </div>
                 <div class="col"></div>
             </div>
@@ -285,11 +289,12 @@
                     <div class="row">
                         <div class="col pas-foto">
                             <div class="card" style="width: 200px;">
-                                <img src="/img/foto/cewe.jpg" class="card-img-top" alt="">
+                                <img src="/img/foto/<?=$data_undangan['foto_wanita']?>" class="card-img-top"
+                                    alt="Foto Wanita">
                             </div>
-                            <h4 class="nickname">Neng</h4>
-                            <h5 class="fullname">Nengsri</h5>
-                            <p class="orangtua">Putri dari:
+                            <h4 class="nickname"><?=$data_undangan['nick_wanita']?></h4>
+                            <h5 class="fullname"><?=$data_undangan['fullname_wanita']?></h5>
+                            <p>Putri dari:
                                 Bapak
                                 &
                                 Ibu
@@ -297,11 +302,12 @@
                         </div>
                         <div class="col pas-foto">
                             <div class="card" style="width: 200px;">
-                                <img src="/img/foto/cowo.jpg" class="card-img-top" alt="">
+                                <img src="/img/foto/<?=$data_undangan['nick_pria']?>" class="card-img-top"
+                                    alt="Foto Pria">
                             </div>
-                            <h4 class="nickname">Arrum</h4>
-                            <h5 class="fullname">Emas Arrum Nurdin</h5>
-                            <p class="">Putra pertama dari:
+                            <h4 class="nickname"><?=$data_undangan['nick_pria']?></h4>
+                            <h5 class="fullname"><?=$data_undangan['fullname_wanita']?></h5>
+                            <p>Putra pertama dari:
                                 Bapak Asep Saefudin
                                 &
                                 Ibu Lilis
@@ -323,84 +329,48 @@
                             <hr style="background-color: grey;">
                             <h6 class="card-subtitle subtitle">Akad Nikah</h6>
                             <p class="card-text tanggal">
-                                Ahad 17 Jumadil Awal 1443
-                                21 Desember 2021
-                                08.00 – 11.00 WIB
+                                <?= tanggal_indonesia_lengkap($data_undangan['tanggal_akad'])?></p>
+                            <p><?=date('H:i', strtotime($data_undangan['akad_awal']))?>
+                                – <?=date('H:i', strtotime($data_undangan['akad_akhir']))?>
+                                WIB
                             </p>
                             <p class="card-text alamat">
-                                Rumah Mempelai Wanita
-                                Jl. Raya Sliyeg
+                                <?=$data_undangan['alamat_akad']?>
                             </p>
-                            <a href="#lokasi" class="item lokasi">Petunjuk Lokasi</a>
+                            <?=$data_undangan['link_akad']?'<a href="'.$data_undangan['link_akad'].'" class="item lokasi">Petunjuk Lokasi</a>':''?>
                             <hr style="background-color: grey;">
                             <h6 class="card-subtitle subtitle">Resepsi</h6>
                             <p class="card-text tanggal">
-                                Ahad 17 Jumadil Awal 1443
-                                21 Desember 2021
-                                11.00 – 18.00 WIB
+                                <?= tanggal_indonesia_lengkap($data_undangan['tanggal_akad'])?></p>
+                            <p><?=date('H:i', strtotime($data_undangan['akad_awal']))?>
+                                – <?=date('H:i', strtotime($data_undangan['akad_akhir']))?>
+                                WIB
                             </p>
                             <p class="card-text alamat">
-                                Rumah Mempelai Wanita
-                                Jl. Raya Sliyeg
+                                <?=$data_undangan['alamat_akad']?>
                             </p>
-                            <a href="#lokasi" class="item lokasi">Petunjuk Lokasi</a>
+                            <?=$data_undangan['link_akad']?'<a href="'.$data_undangan['link_akad'].'" class="item lokasi">Petunjuk Lokasi</a>':''?>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div id="gallery" class="gallery-page text-center">
+    <div id="gallery" class="gallery-page text-center mt-5">
         <div class="container gallery-container">
             <h5 class="title">Gallery</h5>
             <div class="tz-gallery">
 
                 <div class="row">
+                    <?php foreach($gallery as $value_gallery):?>
+                    <?php if($value_gallery['id_data'] == $data_undangan['id']):?>
                     <div class="col-sm-6 col-md-4">
-                        <a class="lightbox" href="/img/bg/park.jpg">
-                            <img src="/img/bg/park.jpg" alt="Park">
+                        <a class="lightbox" href="/img/bg/<?=$data_undangan['foto']?>">
+                            <img src="/img/bg/<?=$data_undangan['foto']?>" alt="Gallery Foto">
                         </a>
                     </div>
-                    <div class="col-sm-6 col-md-4">
-                        <a class="lightbox" href="/img/bg/bridge.jpg">
-                            <img src="/img/bg/bridge.jpg" alt="Bridge">
-                        </a>
-                    </div>
-                    <div class="col-sm-12 col-md-4">
-                        <a class="lightbox" href="/img/bg/tunnel.jpg">
-                            <img src="/img/bg/tunnel.jpg" alt="Tunnel">
-                        </a>
-                    </div>
-                    <div class="col-sm-6 col-md-4">
-                        <a class="lightbox" href="/img/bg/coast.jpg">
-                            <img src="/img/bg/coast.jpg" alt="Coast">
-                        </a>
-                    </div>
-                    <div class="col-sm-6 col-md-4">
-                        <a class="lightbox" href="/img/bg/rails.jpg">
-                            <img src="/img/bg/rails.jpg" alt="Rails">
-                        </a>
-                    </div>
-                    <div class="col-sm-6 col-md-4">
-                        <a class="lightbox" href="/img/bg/traffic.jpg">
-                            <img src="/img/bg/traffic.jpg" alt="Traffic">
-                        </a>
-                    </div>
-                    <div class="col-sm-6 col-md-4">
-                        <a class="lightbox" href="/img/bg/rocks.jpg">
-                            <img src="/img/bg/rocks.jpg" alt="Rocks">
-                        </a>
-                    </div>
-                    <div class="col-sm-6 col-md-4">
-                        <a class="lightbox" href="/img/bg/benches.jpg">
-                            <img src="/img/bg/benches.jpg" alt="Benches">
-                        </a>
-                    </div>
-                    <div class="col-sm-6 col-md-4">
-                        <a class="lightbox" href="/img/bg/sky.jpg">
-                            <img src="/img/bg/sky.jpg" alt="Sky">
-                        </a>
-                    </div>
+                    <?php endif ?>
+                    <?php endforeach ?>
                 </div>
 
             </div>
@@ -604,6 +574,15 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                     <h5 class="title text-center">Wedding Gift</h5>
+                    <?php foreach($wedding_gift as $value_wg): ?>
+                    <?php if($value_wg['id_data'] == $data_undangan['id']):?>
+                    <div class="mt-3 text-center">
+                        <h4><?=$value_wg['jenis']?></h4></span>
+                        <hr style="background-color:lightblue;margin:0;">
+                        <p><?=$value_wg['rincian']?></p>
+                    </div>
+                    <?php endif ?>
+                    <?php endforeach ?>
                 </div>
             </div>
         </div>

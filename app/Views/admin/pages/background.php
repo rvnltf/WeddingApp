@@ -18,15 +18,19 @@
                         <th scope="col">#</th>
                         <th scope="col">Nama Pasangan</th>
                         <th scope="col">Foto</th>
+                        <th scope="col">Jenis</th>
                         <th scope="col" width="22%"></th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php $i = 1; ?>
                     <?php foreach ($background as $value_bg) : ?>
+                    <?php foreach ($pasangan as $value_pasangan) : ?>
                     <tr>
                         <th scope="row"><?=$i?></th>
-                        <td><?=$value_bg['id_data']?></td>
+                        <td>
+                            <?=$value_bg['id_data']==$value_pasangan['id']?$value_pasangan['nick_pria'].' & '.$value_pasangan['nick_wanita']: ''?>
+                        </td>
                         <td>
                             <img src="/img/bg/<?=$value_bg['foto']?>" alt="Foto" width="200">
                         </td>
@@ -46,19 +50,37 @@
                     </tr>
                     <?php $i++; ?>
                     <?php endforeach; ?>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
         </div>
         <div class="col-4">
-            <form action="/admin/simpanBackground/<?=@$background_id?$background_id['id']:''?>" method="POST"
+            <form action="/admin/simpanBackground/<?=@$background_id?$background_id['id']:old('id')?>" method="POST"
                 enctype="multipart/form-data">
                 <?=csrf_field()?>
                 <input type="hidden" name="id" id="id" value="<?=@$background_id?$background_id['id']:''?>">
                 <input type="hidden" name="foto-lama" id="foto-lama"
                     value="<?=@$background_id?$background_id['foto']:''?>">
+                <div class="row mb-3">
+                    <label for="id_data" class="col-sm-3 col-form-label">Nama Pasangan</label>
+                    <div class="col-sm-9">
+                        <select class="form-control <?=$validation->hasError('id_data')?'is-invalid':''?>" id="id_data"
+                            name="id_data" placeholder="Pasangan" aria-label="Pasangan">
+                            <option value="">- Pilih Pasangan -</option>
+                            <?php foreach ($pasangan as $value_pasangan) : ?>
+                            <option value="<?=$value_pasangan['id']?>"
+                                <?=@$background_id?($background_id['id_data']==$value_pasangan['id']?'selected': ''):''?>>
+                                <?=$value_pasangan['nick_pria'] ?> - <?= $value_pasangan['nick_wanita'] ?>
+                            </option>
+                            <?php endforeach ?>
+                        </select>
+                        <div class="invalid-feedback"><?=$validation->getError('id_data')?></div>
+                    </div>
+                </div>
                 <?php
                     $bg1='';
                     $bg2='';
+                    $disable='';
                     if($background_id){
                         if($background_id['jenis']=='bg1'){
                             $bg1 = 'selected=true';
@@ -74,10 +96,10 @@
                     }
                 ?>
                 <div class="row mb-3">
-                    <label for="jenis" class="col-sm-2 col-form-label">Jenis</label>
-                    <div class="col-sm-10">
-                        <select class="form-control <?=$validation->hasError('id_data')?'is-invalid':''?>" id="id_data"
-                            name="id_data" placeholder="id_data" aria-label="id_data">
+                    <label for="jenis" class="col-sm-3 col-form-label">Jenis</label>
+                    <div class="col-sm-9">
+                        <select class="form-control <?=$validation->hasError('jenis')?'is-invalid':''?>" id="jenis"
+                            name="jenis" placeholder="jenis" aria-label="jenis">
                             <option value="">- Pilih
                                 Jenis Foto -</option>
                             <option value="bg1" <?=$bg1?>>
@@ -90,7 +112,7 @@
                 </div>
                 <div class="row mb-3 text-center">
                     <div class="col">
-                        <img src="/img/bg/<?=@$background_id?$background_id['foto']:'default.jpg'?>"
+                        <img src="/img/<?=@$background_id?'bg/'.$background_id['foto']:'gallery/default.jpg'?>"
                             id="preview-background" class="img-thumbnail">
                         <input type="file" name="foto"
                             class="file file-background <?=$validation->hasError('foto')?'is-invalid':''?>"

@@ -4,7 +4,7 @@
     <a href="/admin/tambahDataUndangan" class="btn btn-primary mt-3">
         Tambah Data Undangan
     </a>
-    <h1>Ucapan dan do'a</h1>
+    <h1>Data Undangan</h1>
     <div class="row">
         <div class="col<?=@$ucapan_id?'-8':''?>">
             <?php if(session()->getFlashdata('pesan')):?>
@@ -43,10 +43,10 @@
                             <img src="/img/foto/<?=$value_undangan['foto_wanita']?>" alt="Foto Wanita" width="80">
                         </td>
                         <td>
-                            <a href="/admin/dtcpn/<?=$value_undangan['id_data']?>" class=" btn btn-info">
+                            <a href="/admin/dtdtndngn/<?=$value_undangan['id']?>" class=" btn btn-info">
                                 <span class="glyphicon glyphicon-edit" aria-hidden="true">Edit</span>
                             </a>
-                            <form action="/admin/dltcpn/<?=$value_undangan['id_data']?>" method="POST" class="d-inline">
+                            <form action="/admin/dltdtndngn/<?=$value_undangan['id']?>" method="POST" class="d-inline">
                                 <?= csrf_field(); ?>
                                 <input type="hidden" name="_method" value="DELETE">
                                 <button type="submit" class="btn btn-danger"

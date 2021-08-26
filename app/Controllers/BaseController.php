@@ -36,7 +36,7 @@ class BaseController extends Controller
 	 *
 	 * @var array
 	 */
-	protected $helpers = [];
+	protected $helpers = ['tanggal'];
 
 	/**
 	 * Constructor.
@@ -58,5 +58,7 @@ class BaseController extends Controller
 		$this->ucapanModel = new \App\Models\UcapanModel();
 		$this->weddingGiftModel = new \App\Models\WeddingGiftModel();
 		$this->galleryModel = new \App\Models\GalleryModel();
+		$this->dataUndanganModel = new \App\Models\DataUndanganModel();
+		$this->backgroundModel = new \App\Models\BackgroundModel();
 	}
 }

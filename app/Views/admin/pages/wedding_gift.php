@@ -57,6 +57,7 @@
             <form action="/admin/simpanWeddingGift/<?=@$wedding_gift_id?$wedding_gift_id['id']:old('id')?>"
                 method="POST">
                 <?=csrf_field()?>
+                <input type="hidden" name="id" id="id" value="<?=@$wedding_gift_id?$wedding_gift_id['id']:old('id')?>">
                 <div class="row mb-3">
                     <label for="id_data" class="col-sm-3 col-form-label">Nama Pasangan</label>
                     <div class="col-sm-9">
@@ -65,7 +66,7 @@
                             <option value="">- Pilih Pasangan -</option>
                             <?php foreach ($pasangan as $value_pasangan) : ?>
                             <option value="<?=$value_pasangan['id']?>"
-                                <?=@$wedding_gift_id['id_data']==$value_pasangan['id']?'selected': ''?>>
+                                <?=@$wedding_gift_id?($wedding_gift_id['id_data']==$value_pasangan['id']?'selected':''): ''?>>
                                 <?=$value_pasangan['nick_pria'] ?> - <?= $value_pasangan['nick_wanita'] ?>
                             </option>
                             <?php endforeach ?>

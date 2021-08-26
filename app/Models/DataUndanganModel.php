@@ -18,4 +18,9 @@ class DataUndanganModel extends Model
         }
         return $this->where(['id' => $id])->first();
     }
+    
+    public function getDataAktif()
+    {
+        return $this->where(['is_actived' => 1])->first();
+    }
 }

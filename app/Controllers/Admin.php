@@ -6,11 +6,6 @@ use App\Models\DataUndanganModel;
 
 class Admin extends BaseController
 {
-	protected $dataUndanganModel;
-	public function __construct()
-	{
-		$this->dataUndanganModel = new DataUndanganModel();
-	}
 	public function index()
 	{
 		$data = [
@@ -28,6 +23,85 @@ class Admin extends BaseController
 			'data_undangan' => $this->dataUndanganModel->getdataUndangan(),
 		];
 		return view('admin/pages/data_undangan', $data);
+	}
+	
+	public function background($id = 0)
+	{
+		$data = [
+			'title' => 'Background',
+			'validation' => \Config\Services::validation(),
+			'pasangan' => $this->dataUndanganModel->getdataUndangan(),
+			'background_id' => $id?$this->backgroundModel->getBackground($id):'',
+			'background' => $this->backgroundModel->getBackground(),
+		];
+		return view('admin/pages/background', $data);
+	}
+	
+	public function simpanBackground($id = 0)
+	{
+		// dd($this->request->getVar());
+		if(!$this->validate([
+				'id_data' => [
+					'rules' => 'required',
+					'errors' => [
+						'required' => 'pasangan harus diisi!'
+					],
+				],
+				'jenis' => [
+					'rules' => 'required',
+					'errors' => [
+						'required' => '{field} harus diisi!'
+					],
+				],
+				'foto' => [
+					'rules' => 'max_size[foto,2048]|is_image[foto]|mime_in[foto,image/jpg,image/jpeg,image/png]',
+					'errors' => [
+						'max_size' => 'ukuran {field} terlalu besar!',
+						'is_image' => 'file yang dipilih bukan {field}!',
+						'mime_in' => 'file yang dipilih bukan {field}!',
+					],
+				]
+			])){
+				if($id){
+					return redirect()->to('/admin/dtbckgrnd/'.$this->request->getVar('id'))->withInput();
+				}
+				return redirect()->to('/admin/background')->withInput();
+		}
+		$foto = $this->request->getFile('foto');
+		$namaFoto = $foto->getRandomName();
+		if($foto->getError() == 4){
+			$namaFoto = $this->request->getVar('foto-lama');			
+		} else {
+			if($this->request->getVar('foto-lama')){
+				$foto->move('img/bg', $namaFoto);
+				unlink('img/bg/'.$this->request->getVar('foto-lama'));
+			} else {
+				$foto->move('img/bg', $namaFoto);
+			}
+			
+		}
+		
+		$this->backgroundModel->save([
+			'id' => $id,
+			'id_data' => $this->request->getVar('id_data'),
+			'jenis' => $this->request->getVar('jenis'),
+			'foto' => $namaFoto,
+		]);
+
+		$teks = $id?'diperbaharui':'ditambahkan';
+		session()->setFlashdata('pesan', 'Data berhasil <strong>'.$teks.'</strong>!');
+		return redirect()->to('/admin/background');
+	}
+	
+	public function deleteBackground($id)
+	{
+		$background = $this->backgroundModel->getGallery($id);
+		if($background['foto'] != 'default.jpg'){
+			unlink('img/bg/'.$background['foto']);
+		}
+		$this->backgroundModel->delete($id);
+		session()->setFlashdata('pesan', 'Data berhasil <strong>dihapus</strong>!');
+		return redirect()->to('/admin/background');
 	}
 	
 	public function gallery($id = 0)
@@ -94,15 +168,13 @@ class Admin extends BaseController
 	{
 		$gallery = $this->galleryModel->getGallery($id);
 		if($gallery['foto'] != 'default.jpg'){
-			if($gallery['jenis'] == 'gallery'){
-				unlink('img/gallery/'.$gallery['foto']);
-			}
-			unlink('img/bg/'.$gallery['foto']);
+			unlink('img/gallery/'.$gallery['foto']);
 		}
 		$this->galleryModel->delete($id);
 		session()->setFlashdata('pesan', 'Data berhasil <strong>dihapus</strong>!');
 		return redirect()->to('/admin/gallery');
-	}	
+	}
+		
 	public function ucapan($id = 0)
 	{
 		$data = [
@@ -210,15 +282,16 @@ class Admin extends BaseController
 		return redirect()->to('/admin/wedding_gift');
 	}
 
-	public function tambahDataUndangan(){
+	public function tambahDataUndangan($id = 0){
 		$data = [
 			'title' => 'Tambah Data Undangan',
+			'data_undangan' => $id?$this->dataUndanganModel->getdataUndangan($id):'',
 			'validation' => \Config\Services::validation(),
 		];
 		return view('admin/pages/tambahDataUndangan', $data);
 		
 	}
-	public function simpanDataUndangan()
+	public function simpanDataUndangan($id = 0)
 	{
 		if(!$this->validate([
 				'nickname_p' => [
@@ -324,28 +397,61 @@ class Admin extends BaseController
 				// 		'max_size' => 'Ukuran musik terlalu besar!',
 				// 	],
 				// ],
-				'kalimat' => [
-					'rules' => 'required',
-					'errors' => [
-						'required' => 'kalimat resepsi harus diisi!'
-					],
-				],
 			])){
 			return redirect()->to('/admin/tambahDataUndangan')->withInput();
 		}
 
-
+		//Foto Pria
 		$foto1 = $this->request->getFile('file.0');
-		$foto2 = $this->request->getFile('file.1');
-		$musik = $this->request->getFile('file.2');
 		$namaFoto1 = $foto1->getRandomName();
+		if($foto1->isValid()){
+			if($this->request->getVar('foto-lama-pria')){
+				$foto1->move('img/foto', $namaFoto1);
+				unlink('img/foto/'.$this->request->getVar('foto-lama-pria'));
+			} else {
+				$foto1->move('img/foto', $namaFoto1);
+			}			
+		} else {
+			$namaFoto1 = $this->request->getVar('foto-lama-pria');
+		}
+		//Foto Wanita
+		$foto2 = $this->request->getFile('file.1');
 		$namaFoto2 = $foto2->getRandomName();
+		if($foto2->isValid()){
+			if($this->request->getVar('foto-lama-wanita')){
+				$foto2->move('img/foto', $namaFoto2);
+				unlink('img/foto/'.$this->request->getVar('foto-lama-wanita'));
+			} else {
+				$foto2->move('img/foto', $namaFoto2);
+			}			
+		} else {
+			$namaFoto2 = $this->request->getVar('foto-lama-wanita');
+		}
+		//Musik
+		$musik = $this->request->getFile('file.2');
 		$namaMusik = $musik->getRandomName();
-		$foto1->move('img/foto', $namaFoto1);
-		$foto2->move('img/foto', $namaFoto2);
-		$musik->move('music', $namaMusik);
+		if($musik->isValid()){
+			if($this->request->getVar('musik-lama')){
+				$musik->move('img/foto', $namaMusik);
+				unlink('img/foto/'.$this->request->getVar('musik-lama'));
+			} else {
+				$musik->move('img/foto', $namaMusik);
+			}			
+		} else {
+			$namaMusik = $this->request->getVar('musik-lama');
+		}
+		// $foto1 = $this->request->getFile('file.0');
+		// $foto2 = $this->request->getFile('file.1');
+		// $musik = $this->request->getFile('file.2');
+		// $namaFoto1 = $foto1->getRandomName();
+		// $namaFoto2 = $foto2->getRandomName();
+		// $namaMusik = $musik->getRandomName();
+		// $foto1->move('img/foto', $namaFoto1);
+		// $foto2->move('img/foto', $namaFoto2);
+		// $musik->move('music', $namaMusik);
 
 		$this->dataUndanganModel->save([
+			'id' => $id,
 			'nick_pria' => $this->request->getVar('nickname_p'),
 			'nick_wanita' => $this->request->getVar('nickname_w'),
 			'fullname_pria' => $this->request->getVar('fullname_p'),
@@ -368,6 +474,27 @@ class Admin extends BaseController
 		]);
 		
 		
+		return redirect()->to('/admin/data_undangan');
+	}
+
+	public function deleteDataUndangan($id)
+	{
+		$dataUndangan = $this->dataUndanganModel->getdataUndangan($id);
+		if($dataUndangan['foto_pria']){
+			if($dataUndangan['foto_pria'] != 'avatar.jpg'){
+				unlink('img/foto/'.$dataUndangan['foto_pria']);
+			}
+		}
+		if($dataUndangan['foto_wanita']){
+			if($dataUndangan['foto_wanita'] != 'avatar.jpg'){
+				unlink('img/foto/'.$dataUndangan['foto_wanita']);
+			}
+		}
+		if($dataUndangan['musik']){
+			unlink('music/'.$dataUndangan['musik']);
+		}
+		$this->dataUndanganModel->delete($id);
+		session()->setFlashdata('pesan', 'Data berhasil <strong>dihapus</strong>!');
 		return redirect()->to('/admin/data_undangan');
 	}
 }

@@ -95,7 +95,7 @@ class Admin extends BaseController
 	
 	public function deleteBackground($id)
 	{
-		$background = $this->backgroundModel->getGallery($id);
+		$background = $this->backgroundModel->getBackground($id);
 		if($background['foto'] != 'default.jpg'){
 			unlink('img/bg/'.$background['foto']);
 		}
@@ -225,6 +225,79 @@ class Admin extends BaseController
 		return redirect()->to('/admin/ucapan');
 	}
 	
+	public function orangtua($id = 0)
+	{
+		$data = [
+			'title' => 'Orangtua Pasangan',
+			'orangtua' => $this->orangtuaModel->getOrangtua(),
+			'pasangan' => $this->dataUndanganModel->getdataUndangan(),
+			'orangtua_id' => $id?$this->orangtuaModel->getOrangtua($id):'',
+			'validation' => \Config\Services::validation(),
+		];
+		return view('admin/pages/orangtua', $data);
+	}
+
+	public function simpanOrangtua($id = 0)
+	{
+		if(!$this->validate([
+				'id_data' => [
+					'rules' => 'required',
+					'errors' => [
+						'required' => 'pasangan harus diisi!'
+					],
+				],
+				'orangtua_pria' => [
+					'rules' => 'required|max_length[100]',
+					'errors' => [
+						'required' => '{field} harus diisi!',
+						'max_length' => '{field} lebih dari 50 karakter!'
+					],
+				],
+				'orangtua_wanita' => [
+					'rules' => 'required|max_length[100]',
+					'errors' => [
+						'required' => '{field} harus diisi!',
+						'max_length' => '{field} lebih dari 50 karakter!'
+					],
+				],
+				'anak_pria' => [
+					'rules' => 'required',
+					'errors' => [
+						'required' => '{field} harus diisi!',
+					],
+				],
+				'anak_wanita' => [
+					'rules' => 'required',
+					'errors' => [
+						'required' => '{field} harus diisi!',
+					],
+				]
+			])){
+			return redirect()->to('/admin/orangtua')->withInput();
+		}
+
+		
+		$this->orangtuaModel->save([
+			'id' => $id,
+			'id_data' => $this->request->getVar('id_data'),
+			'orangtua_pria' => $this->request->getVar('orangtua_pria'),
+			'orangtua_wanita' => $this->request->getVar('orangtua_wanita'),
+			'anak_pria' => $this->request->getVar('anak_pria'),
+			'anak_wanita' => $this->request->getVar('anak_wanita'),
+		]);
+
+		$teks = $id?'diperbaharui':'ditambahkan';
+		session()->setFlashdata('pesan', 'Data berhasil <strong>'.$teks.'</strong>!');
+		return redirect()->to('/admin/orangtua');
+	}
+	
+	public function deleteOrangtua($id)
+	{
+		$this->orangtuaModel->delete($id);
+		session()->setFlashdata('pesan', 'Data berhasil <strong>dihapus</strong>!');
+		return redirect()->to('/admin/orangtua');
+	}
+
 	public function wedding_gift($id = 0)
 	{
 		$data = [

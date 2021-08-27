@@ -35,10 +35,10 @@
                             <img src="/img/bg/<?=$value_bg['foto']?>" alt="Foto" width="200">
                         </td>
                         <td>
-                            <a href="/admin/dtgllry/<?=$value_bg['id']?>" class=" btn btn-info">
+                            <a href="/admin/dtbckgrnd/<?=$value_bg['id']?>" class=" btn btn-info">
                                 <span class="glyphicon glyphicon-edit" aria-hidden="true">Edit</span>
                             </a>
-                            <form action="/admin/dltgllry/<?=$value_bg['id']?>" method="POST" class="d-inline">
+                            <form action="/admin/dltbckgrnd/<?=$value_bg['id']?>" method="POST" class="d-inline">
                                 <?= csrf_field(); ?>
                                 <input type="hidden" name="_method" value="DELETE">
                                 <button type="submit" class="btn btn-danger"

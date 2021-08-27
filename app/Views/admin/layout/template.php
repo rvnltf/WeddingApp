@@ -7,6 +7,7 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <title>Admin | <?=$title?></title>
+    <link href="/img/icon/en.png" rel="shortcut icon" type="image/x-icon" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="/css/styles.css" rel="stylesheet" />
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -36,6 +37,8 @@
             <div class="list-group list-group-flush">
                 <a class="list-group-item list-group-item-action list-group-item-light p-3"
                     href="/admin/data_undangan">Data Undangan</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3"
+                    href="/admin/orangtua">Orangtua</a>
                 <a class="list-group-item list-group-item-action list-group-item-light p-3"
                     href="/admin/background">Background</a>
                 <a class="list-group-item list-group-item-action list-group-item-light p-3"
@@ -160,6 +163,22 @@
                 reader.readAsDataURL(this.files[0]);
             });
         });
+
+        var isNS = (navigator.appName == "Netscape") ? 1 : 0;
+        if (navigator.appName == "Netscape") document.captureEvents(Event.MOUSEDOWN || Event.MOUSEUP);
+
+        function mischandler() {
+            return false;
+        }
+
+        function mousehandler(e) {
+            var myevent = (isNS) ? e : event;
+            var eventbutton = (isNS) ? myevent.which : myevent.button;
+            if ((eventbutton == 2) || (eventbutton == 3)) return false;
+        }
+        document.oncontextmenu = mischandler;
+        document.onmousedown = mousehandler;
+        document.onmouseup = mousehandler;
         </script>
 </body>
 

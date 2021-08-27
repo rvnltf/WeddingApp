@@ -18,6 +18,15 @@
     <link rel="stylesheet" href="/css/form-comment.css">
     <link rel="icon" type="image/png" href="/img/icon/favicon.png" />
     <title>Nengsri & Emas Arrum Nurdin</title>
+    <?php 
+        $background1 = '';
+        $background2 = '';
+        foreach ($background as $value_bg) {
+            if($value_bg['id_data'] == $data_undangan['id']){
+                $value_bg['jenis']=='bg1'?$background1=$value_bg['foto'] : $background2=$value_bg['foto'];
+            }
+        }
+    ?>
     <style>
     html {
         scroll-behavior: smooth;
@@ -94,7 +103,7 @@
 
     .jumbotron {
         min-height: 660px;
-        background-image: url("/img/bg/prewedding.jpg");
+        background-image: url("/img/bg/<?=$background1?$background1:'prewedding.jpg'?>");
         background-attachment: fixed;
         background-repeat: no-repeat;
         background-position: center;
@@ -181,7 +190,7 @@
 
     .event-page {
         min-height: 616px;
-        background-image: url("/img/bg/prewedding2.jpg");
+        background-image: url("/img/bg/<?=$background2?$background2:'prewedding2.jpg'?>");
         background-attachment: fixed;
         background-repeat: no-repeat;
         background-position: center;
@@ -289,28 +298,26 @@
                     <div class="row">
                         <div class="col pas-foto">
                             <div class="card" style="width: 200px;">
-                                <img src="/img/foto/<?=$data_undangan['foto_wanita']?>" class="card-img-top"
-                                    alt="Foto Wanita">
+                                <img src="/img/foto/<?=$data_undangan['foto_wanita']?$data_undangan['foto_wanita']:'avatar.jpg'?>"
+                                    class="card-img-top" alt="Foto Wanita">
                             </div>
                             <h4 class="nickname"><?=$data_undangan['nick_wanita']?></h4>
                             <h5 class="fullname"><?=$data_undangan['fullname_wanita']?></h5>
-                            <p>Putri dari:
-                                Bapak
-                                &
-                                Ibu
+                            <p>Putri
+                                <?=$orangtua?$orangtua['anak_wanita']:''?> dari:
+                                <?=$orangtua?$orangtua['orangtua_wanita']:''?>
                             </p>
                         </div>
                         <div class="col pas-foto">
                             <div class="card" style="width: 200px;">
-                                <img src="/img/foto/<?=$data_undangan['nick_pria']?>" class="card-img-top"
-                                    alt="Foto Pria">
+                                <img src="/img/foto/<?=$data_undangan['nick_pria']?$data_undangan['nick_pria']:'avatar.jpg'?>"
+                                    class="card-img-top" alt="Foto Pria">
                             </div>
                             <h4 class="nickname"><?=$data_undangan['nick_pria']?></h4>
-                            <h5 class="fullname"><?=$data_undangan['fullname_wanita']?></h5>
-                            <p>Putra pertama dari:
-                                Bapak Asep Saefudin
-                                &
-                                Ibu Lilis
+                            <h5 class="fullname"><?=$data_undangan['fullname_pria']?></h5>
+                            <p>Putra
+                                <?=$orangtua?$orangtua['anak_pria']:''?> dari:
+                                <?=$orangtua?$orangtua['orangtua_pria']:''?>
                             </p>
                         </div>
                     </div>
@@ -365,8 +372,8 @@
                     <?php foreach($gallery as $value_gallery):?>
                     <?php if($value_gallery['id_data'] == $data_undangan['id']):?>
                     <div class="col-sm-6 col-md-4">
-                        <a class="lightbox" href="/img/bg/<?=$data_undangan['foto']?>">
-                            <img src="/img/bg/<?=$data_undangan['foto']?>" alt="Gallery Foto">
+                        <a class="lightbox" href="/img/bg/<?=$value_gallery['foto']?>">
+                            <img src="/img/bg/<?=$value_gallery['foto']?>" alt="Gallery Foto">
                         </a>
                     </div>
                     <?php endif ?>
@@ -587,8 +594,47 @@
             </div>
         </div>
     </div>
+    <!-- <div class="modal fade show d-block" id="giftModal" tabindex="-1" role="dialog" aria-labelledby="giftModalTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h5 class="title text-center">Wedding Gift</h5>
+                    <?php foreach($wedding_gift as $value_wg): ?>
+                    <?php if($value_wg['id_data'] == $data_undangan['id']):?>
+                    <div class="mt-3 text-center">
+                        <h4><?=$value_wg['jenis']?></h4></span>
+                        <hr style="background-color:lightblue;margin:0;">
+                        <p><?=$value_wg['rincian']?></p>
+                    </div>
+                    <?php endif ?>
+                    <?php endforeach ?>
+                </div>
+            </div>
+        </div>
+    </div> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.8.1/baguetteBox.min.js"></script>
     <script>
+    var isNS = (navigator.appName == "Netscape") ? 1 : 0;
+    if (navigator.appName == "Netscape") document.captureEvents(Event.MOUSEDOWN || Event.MOUSEUP);
+
+    function mischandler() {
+        return false;
+    }
+
+    function mousehandler(e) {
+        var myevent = (isNS) ? e : event;
+        var eventbutton = (isNS) ? myevent.which : myevent.button;
+        if ((eventbutton == 2) || (eventbutton == 3)) return false;
+    }
+    document.oncontextmenu = mischandler;
+    document.onmousedown = mousehandler;
+    document.onmouseup = mousehandler;
+
+
     baguetteBox.run('.tz-gallery');
 
     const nav = document.querySelector('nav');

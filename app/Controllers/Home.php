@@ -7,18 +7,26 @@ class Home extends BaseController
 	
 	public function index()
 	{
-		$ucapan = $this->ucapanModel->findAll();
-		$weddingGift = $this->weddingGiftModel->getWeddingGift();
-		$gallery = $this->galleryModel->getGallery();
 		$dataUndangan = $this->dataUndanganModel->getDataAktif();
-		$data = [
-			'ucapan' => $ucapan,
-			'gallery' => $gallery,
-			'wedding_gift' => $weddingGift,
-			'data_undangan' => $dataUndangan,
-			'validation' => \Config\Services::validation(),
-		];
-		return view('invitation/index', $data);
+		if($dataUndangan){
+			$ucapan = $this->ucapanModel->findAll();
+			$weddingGift = $this->weddingGiftModel->getWeddingGift();
+			$orangtua = $this->orangtuaModel->getOrangtua();
+			$background = $this->backgroundModel->getBackground();
+			$gallery = $this->galleryModel->getGallery();
+			$data = [
+				'ucapan' => $ucapan,
+				'gallery' => $gallery,
+				'background' => $background,
+				'orangtua' => $orangtua,
+				'wedding_gift' => $weddingGift,
+				'data_undangan' => $dataUndangan,
+				'validation' => \Config\Services::validation(),
+			];
+			return view('invitation/index', $data);
+		} else {
+			return view('404');
+		}
 	}
 	public function kirimUcapan()
 	{

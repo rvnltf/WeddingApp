@@ -50,7 +50,7 @@
                 <a class="list-group-item list-group-item-action list-group-item-light p-3"
                     href="/admin/buku_undangan">Buku
                     Undangan</a>
-                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Logout</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/logout">Logout</a>
             </div>
         </div>
         <!-- Page content wrapper-->
@@ -62,7 +62,7 @@
                             class="navbar-toggler-icon"></span></button>
                     <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link" href="#!">Logout</a>
+                            <a class="nav-link" href="/logout"><span class="glyphicon glyphicon-log-out"></span></a>
                         </li>
                     </ul>
                 </div>

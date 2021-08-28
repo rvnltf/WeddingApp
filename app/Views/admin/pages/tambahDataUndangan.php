@@ -39,47 +39,13 @@
                         <div class="invalid-feedback"><?=$validation->getError('fullname_p')?></div>
                     </div>
                 </div>
-                <div class="row mb-3">
+                <div class="row mb-1">
                     <label for="fullname_w" class="col-sm-3 col-form-label">Fullname Wanita</label>
                     <div class="col-sm-9">
                         <input type="text" class="form-control <?=$validation->hasError('fullname_w')?'is-invalid':''?>"
                             id="fullname_w" name="fullname_w" placeholder="Fullname Wanita" aria-label="Fullname Wanita"
                             value="<?=$data_undangan?$data_undangan['fullname_wanita']:old('fullname_w')?>">
                         <div class="invalid-feedback"><?=$validation->getError('fullname_w')?></div>
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <label for="orangtua_wanita" class="col-sm-3 col-form-label">Orangtua Wanita</label>
-                    <div class="col-sm-6">
-                        <input type="text"
-                            class="form-control <?=$validation->hasError('orangtua_wanita')?'is-invalid':''?>"
-                            id="orangtua_wanita" name="orangtua_wanita" placeholder="Bapak & Ibu"
-                            aria-label="Bapak & Ibu"
-                            value="<?=$data_undangan?$data_undangan['orangtua_wanita']:old('orangtua_wanita')?>">
-                        <div class="invalid-feedback"><?=$validation->getError('orangtua_wanita')?></div>
-                    </div>
-                    <div class="col-sm-3">
-                        <input type="text"
-                            class="form-control <?=$validation->hasError('anak_wanita')?'is-invalid':''?>"
-                            id="anak_wanita" name="anak_wanita" placeholder="Anak ke" aria-label="Anak ke"
-                            value="<?=$data_undangan?$data_undangan['anak_wanita']:old('anak_wanita')?>">
-                        <div class="invalid-feedback"><?=$validation->getError('anak_wanita')?></div>
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <label for="orangtua_pria" class="col-sm-3 col-form-label">Orangtua Pria</label>
-                    <div class="col-sm-6">
-                        <input type="text"
-                            class="form-control <?=$validation->hasError('orangtua_pria')?'is-invalid':''?>"
-                            id="orangtua_pria" name="orangtua_pria" placeholder="Bapak & Ibu" aria-label="Bapak & Ibu"
-                            value="<?=$data_undangan?$data_undangan['orangtua_pria']:old('orangtua_pria')?>">
-                        <div class="invalid-feedback"><?=$validation->getError('orangtua_pria')?></div>
-                    </div>
-                    <div class="col-sm-3">
-                        <input type="text" class="form-control <?=$validation->hasError('anak_pria')?'is-invalid':''?>"
-                            id="anak_pria" name="anak_pria" placeholder="Anak ke" aria-label="Anak ke"
-                            value="<?=$data_undangan?$data_undangan['anak_pria']:old('anak_pria')?>">
-                        <div class="invalid-feedback"><?=$validation->getError('anak_pria')?></div>
                     </div>
                 </div>
                 <div class="row mb-3">

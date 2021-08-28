@@ -505,10 +505,10 @@ class Admin extends BaseController
 		$namaMusik = $musik->getRandomName();
 		if($musik->isValid()){
 			if($this->request->getVar('musik-lama')){
-				$musik->move('img/foto', $namaMusik);
-				unlink('img/foto/'.$this->request->getVar('musik-lama'));
+				$musik->move('musik', $namaMusik);
+				unlink('musik/'.$this->request->getVar('musik-lama'));
 			} else {
-				$musik->move('img/foto', $namaMusik);
+				$musik->move('musik', $namaMusik);
 			}			
 		} else {
 			$namaMusik = $this->request->getVar('musik-lama');
@@ -564,7 +564,7 @@ class Admin extends BaseController
 			}
 		}
 		if($dataUndangan['musik']){
-			unlink('music/'.$dataUndangan['musik']);
+			unlink('musil/'.$dataUndangan['musik']);
 		}
 		$this->dataUndanganModel->delete($id);
 		session()->setFlashdata('pesan', 'Data berhasil <strong>dihapus</strong>!');

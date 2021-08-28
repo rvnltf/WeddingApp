@@ -5,25 +5,50 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Questrial&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.8.1/baguetteBox.min.css">
+    <!--Font Awesome Icons-->
+    <script src="https://kit.fontawesome.com/f2c150d561.js" crossorigin="anonymous">
+    </script>
+    <!--jQuery CDN-->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
+    </script>
     <link rel="stylesheet" href="/css/gallery-grid.css">
     <link rel="stylesheet" href="/css/form-comment.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Questrial&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.8.1/baguetteBox.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+    </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.8.1/baguetteBox.min.js">
+    </script>
     <link rel="icon" type="image/png" href="/img/icon/favicon.png" />
-    <title>Nengsri & Emas Arrum Nurdin</title>
+    <title>
+        <?=$data_undangan['fullname_wanita']?> &
+        <?=$data_undangan['fullname_pria']?>
+    </title>
     <?php 
         $background1 = '';
         $background2 = '';
         foreach ($background as $value_bg) {
             if($value_bg['id_data'] == $data_undangan['id']){
                 $value_bg['jenis']=='bg1'?$background1=$value_bg['foto'] : $background2=$value_bg['foto'];
+            }
+        }
+        $orangtuaPria = '';
+        $orangtuaWanita = '';
+        $anakPria = '';
+        $anakWanita = '';
+        foreach ($orangtua as $value_orangtua) {
+            if($value_orangtua['id_data'] == $data_undangan['id']){
+                $orangtuaPria = $value_orangtua['orangtua_pria'];
+                $orangtuaWanita = $value_orangtua['orangtua_wanita'];
+                $anakPria = $value_orangtua['anak_pria'];
+                $anakWanita = $value_orangtua['anak_wanita'];
             }
         }
     ?>
@@ -50,6 +75,25 @@
 
     body.scroll {
         overflow: visible;
+    }
+
+    .audio {
+        background-image: url('/img/bg/bottom-navbar.jpg');
+        background-repeat: no-repeat;
+        border: none;
+        color: white;
+        padding: 5px 8px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 50%;
+        position: fixed;
+        right: 1%;
+        bottom: 50%;
+        box-shadow: 1px 1px 10px 0px lightblue;
+        transition: 0.2s;
     }
 
     .navbar {
@@ -172,7 +216,7 @@
     }
 
     .couple-page {
-        padding: 50px 0;
+        padding: 30px 0;
     }
 
     .card {
@@ -265,6 +309,7 @@
 </head>
 
 <body>
+
     <div id="home" class="jumbotron text-center">
         <div class="box">
             <h3 class="item the-wedding-of">The Wedding of</h3>
@@ -283,7 +328,7 @@
             <div class="row">
                 <div class="col"></div>
                 <div class="col-10">
-                    <img src="/img/icon/en.png" alt="E & N" width="200">
+                    <img src="/img/icon/en.png" alt="E & N" width="150" class="mb-5">
                     <?=$data_undangan['kalimat']?$data_undangan['kalimat']:'<p>Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan pasangan-pasangan untukmu
                         dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya, dan Dia menjadikan di
                         antaramu rasa kasih dan sayang. Sungguh, pada yang demikian itu benar-benar terdapat tanda-tanda
@@ -303,21 +348,19 @@
                             </div>
                             <h4 class="nickname"><?=$data_undangan['nick_wanita']?></h4>
                             <h5 class="fullname"><?=$data_undangan['fullname_wanita']?></h5>
-                            <p>Putri
-                                <?=$orangtua?$orangtua['anak_wanita']:''?> dari:
-                                <?=$orangtua?$orangtua['orangtua_wanita']:''?>
+                            <p>Putri <?=$anakWanita?urutan_anak($anakWanita):''?> dari:
+                                <?=$orangtuaWanita?$orangtuaWanita:''?>
                             </p>
                         </div>
                         <div class="col pas-foto">
                             <div class="card" style="width: 200px;">
-                                <img src="/img/foto/<?=$data_undangan['nick_pria']?$data_undangan['nick_pria']:'avatar.jpg'?>"
+                                <img src="/img/foto/<?=$data_undangan['foto_pria']?$data_undangan['foto_pria']:'avatar.jpg'?>"
                                     class="card-img-top" alt="Foto Pria">
                             </div>
                             <h4 class="nickname"><?=$data_undangan['nick_pria']?></h4>
                             <h5 class="fullname"><?=$data_undangan['fullname_pria']?></h5>
-                            <p>Putra
-                                <?=$orangtua?$orangtua['anak_pria']:''?> dari:
-                                <?=$orangtua?$orangtua['orangtua_pria']:''?>
+                            <p>Putra <?=$anakPria?urutan_anak($anakPria):''?> dari:
+                                <?=$orangtuaPria?$orangtuaPria:''?>
                             </p>
                         </div>
                     </div>
@@ -326,6 +369,7 @@
             </div>
         </div>
     </div>
+    <i class="fas fa-volume-up" style="font-size: 60px;"></i>
     <div id="event" class="event-page text-center">
         <div class="container">
             <div class="row">
@@ -341,22 +385,22 @@
                                 – <?=date('H:i', strtotime($data_undangan['akad_akhir']))?>
                                 WIB
                             </p>
-                            <p class="card-text alamat">
+                            <p class="card-text">
                                 <?=$data_undangan['alamat_akad']?>
                             </p>
                             <?=$data_undangan['link_akad']?'<a href="'.$data_undangan['link_akad'].'" class="item lokasi">Petunjuk Lokasi</a>':''?>
                             <hr style="background-color: grey;">
                             <h6 class="card-subtitle subtitle">Resepsi</h6>
                             <p class="card-text tanggal">
-                                <?= tanggal_indonesia_lengkap($data_undangan['tanggal_akad'])?></p>
-                            <p><?=date('H:i', strtotime($data_undangan['akad_awal']))?>
-                                – <?=date('H:i', strtotime($data_undangan['akad_akhir']))?>
+                                <?= tanggal_indonesia_lengkap($data_undangan['tanggal_resepsi'])?></p>
+                            <p><?=date('H:i', strtotime($data_undangan['resepsi_awal']))?>
+                                – <?=date('H:i', strtotime($data_undangan['resepsi_akhir']))?>
                                 WIB
                             </p>
-                            <p class="card-text alamat">
-                                <?=$data_undangan['alamat_akad']?>
+                            <p class="card-text">
+                                <?=$data_undangan['alamat_resepsi']?>
                             </p>
-                            <?=$data_undangan['link_akad']?'<a href="'.$data_undangan['link_akad'].'" class="item lokasi">Petunjuk Lokasi</a>':''?>
+                            <?=$data_undangan['link_resepsi']?'<a href="'.$data_undangan['link_resepsi'].'" class="item lokasi">Petunjuk Lokasi</a>':''?>
                         </div>
                     </div>
                 </div>
@@ -594,45 +638,32 @@
             </div>
         </div>
     </div>
-    <!-- <div class="modal fade show d-block" id="giftModal" tabindex="-1" role="dialog" aria-labelledby="giftModalTitle"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h5 class="title text-center">Wedding Gift</h5>
-                    <?php foreach($wedding_gift as $value_wg): ?>
-                    <?php if($value_wg['id_data'] == $data_undangan['id']):?>
-                    <div class="mt-3 text-center">
-                        <h4><?=$value_wg['jenis']?></h4></span>
-                        <hr style="background-color:lightblue;margin:0;">
-                        <p><?=$value_wg['rincian']?></p>
-                    </div>
-                    <?php endif ?>
-                    <?php endforeach ?>
-                </div>
-            </div>
-        </div>
-    </div> -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.8.1/baguetteBox.min.js"></script>
+    <audio src="/musik/<?=$data_undangan['musik']?>" autoplay></audio>
+    <!-- <button type="button" class="btn btn-primary active audio" data-toggle="button" aria-pressed="false"
+        autocomplete="off" onclick="toggleMucic(this)">
+        <i class="fas fa-volume-up"></i>
+    </button> -->
     <script>
-    var isNS = (navigator.appName == "Netscape") ? 1 : 0;
-    if (navigator.appName == "Netscape") document.captureEvents(Event.MOUSEDOWN || Event.MOUSEUP);
+    const audio = document.querySelector('audio');
+    $(".fas").click(function() {
+        $(".fas").toggleClass("fa-volume-mute");
+        $("audio").prop("muted", !$("audio").prop("muted"));
+    });
+    // var isNS = (navigator.appName == "Netscape") ? 1 : 0;
+    // if (navigator.appName == "Netscape") document.captureEvents(Event.MOUSEDOWN || Event.MOUSEUP);
 
-    function mischandler() {
-        return false;
-    }
+    // function mischandler() {
+    //     return false;
+    // }
 
-    function mousehandler(e) {
-        var myevent = (isNS) ? e : event;
-        var eventbutton = (isNS) ? myevent.which : myevent.button;
-        if ((eventbutton == 2) || (eventbutton == 3)) return false;
-    }
-    document.oncontextmenu = mischandler;
-    document.onmousedown = mousehandler;
-    document.onmouseup = mousehandler;
+    // function mousehandler(e) {
+    //     var myevent = (isNS) ? e : event;
+    //     var eventbutton = (isNS) ? myevent.which : myevent.button;
+    //     if ((eventbutton == 2) || (eventbutton == 3)) return false;
+    // }
+    // document.oncontextmenu = mischandler;
+    // document.onmousedown = mousehandler;
+    // document.onmouseup = mousehandler;
 
 
     baguetteBox.run('.tz-gallery');

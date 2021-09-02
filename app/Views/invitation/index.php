@@ -14,6 +14,7 @@
     </script>
     <link rel="stylesheet" href="/css/gallery-grid.css">
     <link rel="stylesheet" href="/css/form-comment.css">
+    <link rel="stylesheet" href="/css/timeline.css">
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Questrial&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.8.1/baguetteBox.min.css">
@@ -81,7 +82,6 @@
         background-image: url('/img/bg/bottom-navbar.jpg');
         background-repeat: no-repeat;
         border: none;
-        color: white;
         padding: 5px 8px;
         text-align: center;
         text-decoration: none;
@@ -94,6 +94,7 @@
         bottom: 50%;
         box-shadow: 1px 1px 10px 0px lightblue;
         transition: 0.2s;
+        z-index: 100;
     }
 
     .navbar {
@@ -109,6 +110,7 @@
         border-radius: 10px;
         box-shadow: 1px 1px 10px 0px lightblue;
         transition: 0.2s;
+        z-index: 100;
     }
 
     .navbar.sticky {
@@ -309,7 +311,6 @@
 </head>
 
 <body>
-
     <div id="home" class="jumbotron text-center">
         <div class="box">
             <h3 class="item the-wedding-of">The Wedding of</h3>
@@ -369,7 +370,10 @@
             </div>
         </div>
     </div>
-    <i class="fas fa-volume-up" style="font-size: 60px;"></i>
+    <audio src="/musik/<?=$data_undangan['musik']?>" autoplay></audio>
+    <button type="button" class="btn active audio" data-toggle="button" aria-pressed="false" autocomplete="off">
+        <i id="volume" class="fas fa-volume-up"></i>
+    </button>
     <div id="event" class="event-page text-center">
         <div class="container">
             <div class="row">
@@ -425,7 +429,28 @@
                 </div>
 
             </div>
-
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="main-timeline7">
+                            <?php foreach($timeline as $value_timeline):?>
+                            <div class="timeline">
+                                <div class="timeline-icon"><i class="fa fa-heart-o"></i></div>
+                                <span class="year">
+                                    <?=$value_timeline['tanggal']?>
+                                </span>
+                                <div class="timeline-content">
+                                    <h5 class="title"><?=$value_timeline['judul']?></h5>
+                                    <p class="description">
+                                        <?=$value_timeline['rincian']?>
+                                    </p>
+                                </div>
+                            </div>
+                            <?php endforeach ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <hr style="background-color:lightblue;">
@@ -638,17 +663,13 @@
             </div>
         </div>
     </div>
-    <audio src="/musik/<?=$data_undangan['musik']?>" autoplay></audio>
-    <!-- <button type="button" class="btn btn-primary active audio" data-toggle="button" aria-pressed="false"
-        autocomplete="off" onclick="toggleMucic(this)">
-        <i class="fas fa-volume-up"></i>
-    </button> -->
     <script>
-    const audio = document.querySelector('audio');
-    $(".fas").click(function() {
-        $(".fas").toggleClass("fa-volume-mute");
-        $("audio").prop("muted", !$("audio").prop("muted"));
-    });
+    // $(".fas").click(function() {
+    //     $(".audio").innerHTML = $("audio").prop("muted", true) ?
+    //         '<i class="fas fa-volume-up"></i>' :
+    //         '<i class="fas fa-volume-mute"></i>';
+    //     $("audio").prop("muted", !$("audio").prop("muted"));
+    // });
     // var isNS = (navigator.appName == "Netscape") ? 1 : 0;
     // if (navigator.appName == "Netscape") document.captureEvents(Event.MOUSEDOWN || Event.MOUSEUP);
 
@@ -670,11 +691,18 @@
 
     const nav = document.querySelector('nav');
     const body = document.querySelector('body');
+    const audio = document.querySelector('audio');
+    const audioButton = document.querySelector('.audio');
+    const i = document.querySelector('i');
     window.addEventListener('scroll', () => {
         nav.classList.toggle('sticky', window.scrollY > 300);
     });
     window.addEventListener('scroll', () => {
         body.classList.toggle('scroll', window.scrollY > 0);
+    });
+    audioButton.addEventListener('click', () => {
+        i.classList.toggle('fa-volume-mute');
+        $("audio").prop("muted", !$("audio").prop("muted"));
     });
     </script>
 

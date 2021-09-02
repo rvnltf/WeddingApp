@@ -44,6 +44,8 @@
                 <a class="list-group-item list-group-item-action list-group-item-light p-3"
                     href="/admin/gallery">Gallery</a>
                 <a class="list-group-item list-group-item-action list-group-item-light p-3"
+                    href="/admin/timeline">Timeline Pasangan</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3"
                     href="/admin/ucapan">Ucapan</a>
                 <a class="list-group-item list-group-item-action list-group-item-light p-3"
                     href="/admin/wedding_gift">Wedding Gift</a>
@@ -92,6 +94,9 @@
                 uiLibrary: 'bootstrap4'
             });
             $('#tanggal_resepsi').datepicker({
+                uiLibrary: 'bootstrap4'
+            });
+            $('#tanggal_timeline').datepicker({
                 uiLibrary: 'bootstrap4'
             });
 
@@ -164,21 +169,21 @@
             });
         });
 
-        var isNS = (navigator.appName == "Netscape") ? 1 : 0;
-        if (navigator.appName == "Netscape") document.captureEvents(Event.MOUSEDOWN || Event.MOUSEUP);
+        // var isNS = (navigator.appName == "Netscape") ? 1 : 0;
+        // if (navigator.appName == "Netscape") document.captureEvents(Event.MOUSEDOWN || Event.MOUSEUP);
 
-        function mischandler() {
-            return false;
-        }
+        // function mischandler() {
+        //     return false;
+        // }
 
-        function mousehandler(e) {
-            var myevent = (isNS) ? e : event;
-            var eventbutton = (isNS) ? myevent.which : myevent.button;
-            if ((eventbutton == 2) || (eventbutton == 3)) return false;
-        }
-        document.oncontextmenu = mischandler;
-        document.onmousedown = mousehandler;
-        document.onmouseup = mousehandler;
+        // function mousehandler(e) {
+        //     var myevent = (isNS) ? e : event;
+        //     var eventbutton = (isNS) ? myevent.which : myevent.button;
+        //     if ((eventbutton == 2) || (eventbutton == 3)) return false;
+        // }
+        // document.oncontextmenu = mischandler;
+        // document.onmousedown = mousehandler;
+        // document.onmouseup = mousehandler;
         </script>
 </body>
 

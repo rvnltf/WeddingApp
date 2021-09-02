@@ -174,6 +174,73 @@ class Admin extends BaseController
 		session()->setFlashdata('pesan', 'Data berhasil <strong>dihapus</strong>!');
 		return redirect()->to('/admin/gallery');
 	}
+	
+	public function timeline($id = 0)
+	{
+		$data = [
+			'title' => 'Timeline',
+			'timeline' => $this->timelineModel->getTimeline(),
+			'pasangan' => $this->dataUndanganModel->getdataUndangan(),
+			'timeline_id' => $id?$this->timelineModel->getTimeline($id):'',
+			'validation' => \Config\Services::validation(),
+		];
+		return view('admin/pages/timeline', $data);
+	}
+
+	public function simpanTimeline($id = 0)
+	{
+		if(!$this->validate([
+				'id_data' => [
+					'rules' => 'required',
+					'errors' => [
+						'required' => 'pasangan harus diisi!'
+					],
+				],
+				'tanggal_timeline' => [
+					'rules' => 'required|valid_date[m/d/Y]',
+					'errors' => [
+						'required' => 'tanggal harus diisi!',
+						'valid_date' => 'tanggal tidak valid!'
+					],
+				],
+				'judul' => [
+					'rules' => 'required',
+					'errors' => [
+						'required' => '{field} harus diisi!',
+					],
+				],
+				'rincian' => [
+					'rules' => 'required',
+					'errors' => [
+						'required' => '{field} harus diisi!',
+					],
+				]
+			])){
+				if($id){
+					return redirect()->to('/admin/dttmln/'.$this->request->getVar('id'))->withInput();
+				}
+				return redirect()->to('/admin/timeline')->withInput();
+		}
+		
+		$this->timelineModel->save([
+			'id' => $id,
+			'id_data' => $this->request->getVar('id_data'),
+			'tanggal' => date('Y-m-d', strtotime($this->request->getVar('tanggal_timeline'))),
+			'judul' => $this->request->getVar('judul'),
+			'rincian' => $this->request->getVar('rincian'),
+		]);
+
+		$teks = $id?'diperbaharui':'ditambahkan';
+		session()->setFlashdata('pesan', 'Data berhasil <strong>'.$teks.'</strong>!');
+		return redirect()->to('/admin/timeline');
+	}
+	
+	public function deleteTimeline($id)
+	{
+		$this->timelineModel->delete($id);
+		session()->setFlashdata('pesan', 'Data berhasil <strong>dihapus</strong>!');
+		return redirect()->to('/admin/timeline');
+	}
 		
 	public function ucapan($id = 0)
 	{

@@ -59,6 +59,7 @@ class BaseController extends Controller
 		$this->orangtuaModel = new \App\Models\OrangtuaModel();
 		$this->weddingGiftModel = new \App\Models\WeddingGiftModel();
 		$this->galleryModel = new \App\Models\GalleryModel();
+		$this->timelineModel = new \App\Models\TimelineModel();
 		$this->dataUndanganModel = new \App\Models\DataUndanganModel();
 		$this->backgroundModel = new \App\Models\BackgroundModel();
 	}

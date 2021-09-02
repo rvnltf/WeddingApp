@@ -42,6 +42,8 @@ $routes->delete('/admin/dltcpn/(:num)', 'Admin::deleteUcapan/$1');
 $routes->get('/admin/dtcpn/(:segment)', 'Admin::ucapan/$1');
 $routes->delete('/admin/dltgllry/(:num)', 'Admin::deleteGallery/$1');
 $routes->get('/admin/dtgllry/(:segment)', 'Admin::gallery/$1');
+$routes->delete('/admin/dlttmln/(:num)', 'Admin::deleteTimeline/$1');
+$routes->get('/admin/dttmln/(:segment)', 'Admin::timeline/$1');
 $routes->delete('/admin/dltdtndngn/(:num)', 'Admin::deleteDataUndangan/$1');
 $routes->get('/admin/dtdtndngn/(:segment)', 'Admin::tambahDataUndangan/$1');
 $routes->delete('/admin/dltbckgrnd/(:num)', 'Admin::deleteBackground/$1');

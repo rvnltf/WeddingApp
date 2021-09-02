@@ -14,9 +14,11 @@ class Home extends BaseController
 			$orangtua = $this->orangtuaModel->getOrangtua();
 			$background = $this->backgroundModel->getBackground();
 			$gallery = $this->galleryModel->getGallery();
+			$timeline = $this->timelineModel->getTimeline();
 			$data = [
 				'ucapan' => $ucapan,
 				'gallery' => $gallery,
+				'timeline' => $timeline,
 				'background' => $background,
 				'orangtua' => $orangtua,
 				'wedding_gift' => $weddingGift,

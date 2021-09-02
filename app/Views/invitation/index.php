@@ -370,7 +370,7 @@
             </div>
         </div>
     </div>
-    <audio src="/musik/<?=$data_undangan['musik']?>" autoplay></audio>
+    <!-- <audio src="/musik/<?=$data_undangan['musik']?>" autoplay></audio> -->
     <button type="button" class="btn active audio" data-toggle="button" aria-pressed="false" autocomplete="off">
         <i id="volume" class="fas fa-volume-up"></i>
     </button>
@@ -664,6 +664,25 @@
         </div>
     </div>
     <script>
+    window.addEventListener('load', () => {
+        // noinspection JSUnresolvedVariable
+        let audioCtx = new(window.AudioContext || window.webkitAudioContext)();
+        let xhr = new XMLHttpRequest();
+        xhr.open('GET', '/musik/<?=$data_undangan['musik']?>');
+        xhr.responseType = 'arraybuffer';
+        xhr.addEventListener('load', () => {
+            let playsound = (audioBuffer) => {
+                let source = audioCtx.createBufferSource();
+                source.buffer = audioBuffer;
+                source.connect(audioCtx.destination);
+                source.loop = true;
+                source.start();
+            };
+
+            audioCtx.decodeAudioData(xhr.response).then(playsound);
+        });
+        xhr.send();
+    });
     // $(".fas").click(function() {
     //     $(".audio").innerHTML = $("audio").prop("muted", true) ?
     //         '<i class="fas fa-volume-up"></i>' :

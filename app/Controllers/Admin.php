@@ -2,10 +2,20 @@
 
 namespace App\Controllers;
 
-use App\Models\DataUndanganModel;
+use App\Models\BukuUndanganModel;
+use App\Models\PesanModel;
+use PHPExcel;
+use PHPExcel_IOFactory;
 
 class Admin extends BaseController
 {
+	protected $pesanModel;
+	protected $bukuUndanganModel;
+	public function __construct()
+	{
+		$this->pesanModel = new PesanModel();
+		$this->bukuUndanganModel = new BukuUndanganModel();
+	}
 	public function index()
 	{
 		$data = [
@@ -631,10 +641,169 @@ class Admin extends BaseController
 			}
 		}
 		if($dataUndangan['musik']){
-			unlink('musil/'.$dataUndangan['musik']);
+			unlink('musik/'.$dataUndangan['musik']);
 		}
 		$this->dataUndanganModel->delete($id);
 		session()->setFlashdata('pesan', 'Data berhasil <strong>dihapus</strong>!');
 		return redirect()->to('/admin/data_undangan');
+	}
+	
+	public function buku_undangan($id = 0)
+	{
+		$data = [
+			'title' => 'Pesan',
+			'buku_undangan' => $this->bukuUndanganModel->getBukuUndangan(),
+			'buku_undangan_id' => $id?$this->bukuUndanganModel->getBukuUndangan($id):'',
+			'pasangan' => $this->dataUndanganModel->getdataUndangan(),
+			'pesan' => $this->pesanModel->getPesan(),
+			'validation' => \Config\Services::validation(),
+		];
+		return view('admin/pages/buku_undangan', $data);
+	}
+	
+	public function pesan($id = 0)
+	{
+		$data = [
+			'title' => 'Pesan',
+			'pesan' => $this->pesanModel->getPesan(),
+			'buku_undangan' => $id?$this->bukuUndanganModel->getBukuUndangan():'',
+			'pesan_id' => $id?$this->pesanModel->getPesan($id):'',
+			'pasangan' => $this->dataUndanganModel->getdataUndangan(),
+			'validation' => \Config\Services::validation(),
+		];
+		return view('admin/pages/pesan', $data);
+	}
+
+	public function simpanBukuUndangan($id = 0)
+	{
+		if(!$this->validate([
+				'id_data' => [
+					'rules' => 'required',
+					'errors' => [
+						'required' => 'pasangan harus diisi!'
+					],
+				],
+				'nama' => [
+					'rules' => 'required|max_length[100]',
+					'errors' => [
+						'required' => '{field} harus diisi!',
+						'max_length' => '{field} lebih dari 100 karakter!'
+					],
+				],
+				'pesan' => [
+					'rules' => 'required',
+					'errors' => [
+						'required' => 'pesan harus diisi!'
+					],
+				],
+			])){
+			return redirect()->to('/admin/buku_undangan')->withInput();
+		}
+
+		
+		$this->bukuUndanganModel->save([
+			'id' => $id,
+			'id_data' => $this->request->getVar('id_data'),
+			'nama' => $this->request->getVar('nama'),
+			'no_wa' => $this->request->getVar('no_wa'),
+			'user_ig' => $this->request->getVar('user_ig'),
+			'user_fb' => $this->request->getVar('user_fb'),
+			'pesan' => $this->request->getVar('pesan'),
+		]);
+
+		$teks = $id?'diperbaharui':'ditambahkan';
+		session()->setFlashdata('pesan', 'Data berhasil <strong>'.$teks.'</strong>!');
+		return redirect()->to('/admin/buku_undangan');
+	}
+	
+	public function deleteBukuUndangan($id)
+	{
+		$this->bukuUndanganModel->delete($id);
+		session()->setFlashdata('pesan', 'Data berhasil <strong>dihapus</strong>!');
+		return redirect()->to('/admin/buku_undangan');
+	}
+	
+	public function simpanPesan($id = 0)
+	{
+		if(!$this->validate([
+				'id_data' => [
+					'rules' => 'required',
+					'errors' => [
+						'required' => 'pasangan harus diisi!'
+					],
+				],
+				'judul' => [
+					'rules' => 'required|max_length[100]',
+					'errors' => [
+						'required' => '{field} harus diisi!',
+						'max_length' => '{field} lebih dari 100 karakter!'
+					],
+				],
+				'pesan' => [
+					'rules' => 'required',
+					'errors' => [
+						'required' => 'pesan harus diisi!'
+					],
+				],
+			])){
+			return redirect()->to('/admin/pesan')->withInput();
+		}
+
+		
+		$this->pesanModel->save([
+			'id' => $id,
+			'id_data' => $this->request->getVar('id_data'),
+			'judul' => $this->request->getVar('judul'),
+			'pesan' => $this->request->getVar('pesan'),
+		]);
+
+		$teks = $id?'diperbaharui':'ditambahkan';
+		session()->setFlashdata('pesan', 'Data berhasil <strong>'.$teks.'</strong>!');
+		return redirect()->to('/admin/pesan');
+	}
+	
+	public function deletePesan($id)
+	{
+		$this->pesanModel->delete($id);
+		session()->setFlashdata('pesan', 'Data berhasil <strong>dihapus</strong>!');
+		return redirect()->to('/admin/buku_undangan');
+	}
+
+	
+	public function prosesExcel()
+	{
+		$file = $this->request->getFile('fileexcel');
+		if($file){
+			$excelReader  = new PHPExcel();
+			//mengambil lokasi temp file
+			$fileLocation = $file->getTempName();
+			//baca file
+			$objPHPExcel = PHPExcel_IOFactory::load($fileLocation);
+			//ambil sheet active
+			$sheet	= $objPHPExcel->getActiveSheet()->toArray(null,true,true,true);
+			//looping untuk mengambil data
+			foreach ($sheet as $idx => $data) {
+				//skip index 1 karena title excel
+				if($idx==8){
+					continue;
+				}
+				$nama = $data['A'];
+				$no_wa = $data['B'];
+				$user_ig = $data['C'];
+				$user_fb = $data['D'];
+				$pesan = $data['E'];
+				// insert data
+				$this->bukuUndanganModel->save([
+					'id_data' => 1,
+					'nama' => $nama,
+					'no_wa' => $no_wa,
+					'user_ig' => $user_ig,
+					'user_fb' => $user_fb,
+					'pesan' => $pesan,
+				]);
+			}
+		}
+		session()->setFlashdata('message','Berhasil import excel');
+		return redirect()->to('/admin/buku_undangan');
 	}
 }

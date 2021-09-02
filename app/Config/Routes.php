@@ -48,6 +48,10 @@ $routes->delete('/admin/dltdtndngn/(:num)', 'Admin::deleteDataUndangan/$1');
 $routes->get('/admin/dtdtndngn/(:segment)', 'Admin::tambahDataUndangan/$1');
 $routes->delete('/admin/dltbckgrnd/(:num)', 'Admin::deleteBackground/$1');
 $routes->get('/admin/dtbckgrnd/(:segment)', 'Admin::background/$1');
+$routes->delete('/admin/dltbkndngn/(:num)', 'Admin::deleteBukuUndangan/$1');
+$routes->get('/admin/dtbkndngn/(:segment)', 'Admin::buku_undangan/$1');
+$routes->delete('/admin/dltpsn/(:num)', 'Admin::deletePesan/$1');
+$routes->get('/admin/dtpsn/(:segment)', 'Admin::pesan/$1');
 
 /*
  * --------------------------------------------------------------------

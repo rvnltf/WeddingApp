@@ -41,4 +41,15 @@ class Validation
 	//--------------------------------------------------------------------
 	// Rules
 	//--------------------------------------------------------------------
+	public $transaction = [
+		'fileexcel'         => 'uploaded[fileexcel]|ext_in[fileexcel,xls,xlsx]|max_size[fileexcel,1000]',
+	];
+	 
+	public $transaction_errors = [
+		'fileexcel'=> [
+			'ext_in'    => 'File Excel hanya boleh diisi dengan xls atau xlsx.',
+			'max_size'  => 'File Excel product maksimal 1mb',
+			'uploaded'  => 'File Excel product wajib diisi'
+		]
+	];
 }

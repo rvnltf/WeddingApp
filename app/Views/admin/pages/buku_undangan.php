@@ -64,7 +64,15 @@
             </div>
         </div>
     </form>
-    <form method="post" action="/admin/prosesExcel" enctype="multipart/form-data">
+    <?php if(session()->getFlashdata('pesan')):?>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <?=session()->getFlashdata('pesan')?>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <?php endif ?>
+    <form method="post" action="/admin/proses_import" enctype="multipart/form-data">
         <div class="form-group">
             <label>File Excel</label>
             <input type="file" name="fileexcel" class="form-control" id="file" required accept=".xls, .xlsx" /></p>

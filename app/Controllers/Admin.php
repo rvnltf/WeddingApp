@@ -4,8 +4,8 @@ namespace App\Controllers;
 
 use App\Models\BukuUndanganModel;
 use App\Models\PesanModel;
-use PHPExcel;
-use PHPExcel_IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class Admin extends BaseController
 {
@@ -769,30 +769,48 @@ class Admin extends BaseController
 		return redirect()->to('/admin/buku_undangan');
 	}
 
+	public function proses_import(){
+		$validation =  \Config\Services::validation();
 	
-	public function prosesExcel()
-	{
 		$file = $this->request->getFile('fileexcel');
-		if($file){
-			$excelReader  = new PHPExcel();
-			//mengambil lokasi temp file
-			$fileLocation = $file->getTempName();
-			//baca file
-			$objPHPExcel = PHPExcel_IOFactory::load($fileLocation);
-			//ambil sheet active
-			$sheet	= $objPHPExcel->getActiveSheet()->toArray(null,true,true,true);
-			//looping untuk mengambil data
-			foreach ($sheet as $idx => $data) {
-				//skip index 1 karena title excel
-				if($idx==8){
-					continue;
-				}
-				$nama = $data['A'];
-				$no_wa = $data['B'];
-				$user_ig = $data['C'];
-				$user_fb = $data['D'];
-				$pesan = $data['E'];
-				// insert data
+	
+		$data = array(
+			'fileexcel'           => $file,
+		);
+	
+		if($validation->run($data, 'transaction') == FALSE){
+	
+			session()->setFlashdata('pesan', $validation->getErrors());
+			return redirect()->to(base_url('/admin/buku_undangan'));
+		
+		} else {
+	
+			// ambil extension dari file excel
+			$extension = $file->getClientExtension();
+			
+			// format excel 2007 ke bawah
+			if('xls' == $extension){
+				$reader = new \PhpOffice\PhpSpreadsheet\Reader\Xls();
+			// format excel 2010 ke atas
+			} else {
+				$reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+			}
+			
+			$spreadsheet = $reader->load($file);
+			$data = $spreadsheet->getActiveSheet()->toArray();
+			// dd($data);
+			foreach($data as $idx => $row){
+				
+				// lewati baris ke 0 pada file excel
+				// dalam kasus ini, array ke 0 adalah para title
+				// if($idx == 0) {
+				// 	continue;
+				// }
+				$nama = $row[0];
+				$no_wa = $row[1];
+				$user_ig = $row[2];
+				$user_fb = $row[3];
+				$pesan = $row[4];
 				$this->bukuUndanganModel->save([
 					'id_data' => 1,
 					'nama' => $nama,
@@ -801,9 +819,12 @@ class Admin extends BaseController
 					'user_fb' => $user_fb,
 					'pesan' => $pesan,
 				]);
+		
 			}
+	
+			session()->setFlashdata('pesan', 'Imported Transaction successfully');
+			return redirect()->to(base_url('transaction')); 
 		}
-		session()->setFlashdata('message','Berhasil import excel');
-		return redirect()->to('/admin/buku_undangan');
 	}
+ 
 }
